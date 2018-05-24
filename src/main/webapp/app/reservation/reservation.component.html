@@ -1,0 +1,154 @@
+<div class="row">
+
+    <div class="col-md-1">
+        <div (click)="goBack()"><i class="fa fa-arrow-left" style="font-size:34px;color:#428bca;padding-left: 120px;"></i></i></div>
+     </div>
+
+     <div class="content col-md-11">
+         <div class="col-lg-12 col-sm-12 col-xs-12 alert alert-danger" *ngIf="registrationError">
+             <strong> Error while registering </strong>
+         </div>
+         <br>
+        <div class="breadcrumb breadcrumb-option">
+            <div class="navigation">
+                <div class="nav-variant-breadcrumb">
+                    <h2 class="font-weight-bold text-center h1">Make a Reservation</h2>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+                <div id="reservation-code">
+                    <p></p>
+
+                    <div class="reservation_steps">
+                        <span style="display: inline-block;" class="reservation_step">
+                            <div class="reservation_step_img">
+                                <div *ngIf ="isReservationDetailForm">
+                                    <div class="reservation_step_img_text" style="background-color: #428bca;">
+                                        <strong>1</strong>
+                                    </div>
+                                    <div style="color: #428bca;" class="reservation_step_name">Reservation Details</div>
+                                </div>
+                                <div *ngIf ="!isReservationDetailForm">
+                                    <div class="reservation_step_img_text">
+                                        <strong>1</strong>
+                                    </div>
+                                    <div class="reservation_step_name">Reservation Details</div>
+                                </div>
+
+                            </div>
+                        </span>
+                        <span style="display: inline-block;" class="reservation_step">
+                            <div class="reservation_step_img">
+                                <div *ngIf ="isReservationTimeForm">
+                                    <div class="reservation_step_img_text" style="background-color: #428bca;">
+                                        <strong>2</strong>
+                                    </div>
+                                    <div style="color: #428bca;" class="reservation_step_name">Reservation Date</div>
+                                </div>
+                                <div *ngIf ="!isReservationTimeForm">
+                                    <div class="reservation_step_img_text" >
+                                        <strong>2</strong>
+                                    </div>
+                                    <div class="reservation_step_name">Reservation Date</div>
+                                </div>
+                            </div>
+                        </span>
+                        <span style="display:inline-block;" class="reservation_step">
+                            <div class="reservation_step_img">
+                                <div *ngIf ="isReservationCompleteForm">
+                                     <div class="reservation_step_img_text" style="background-color: #428bca;">
+                                        <strong>3</strong>
+                                    </div>
+                                    <div style="color: #428bca;" class="reservation_step_name">Reservation Completed</div>
+                                </div>
+                                <div *ngIf ="!isReservationCompleteForm">
+                                    <div class="reservation_step_img_text">
+                                        <strong>3</strong>
+                                    </div>
+                                    <div class="reservation_step_name">Reservation Completed</div>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row col-md-12" style="margin-top: 15px;padding: 0;">
+                        <div class="col-md-9">
+                            <div *ngIf="isReservationDetailForm">
+                                <h3>Reservation Details</h3>
+                                <form [formGroup]="reservationDetailForm">
+                                    <div class="personal_details">
+                                        <div class="form-group planyo-form-item-group  col-md-8" id="row_first">
+                                            <label for="firstName" class="control-label">First name<em>*</em></label>
+                                            <input class="with-status-border form-control" maxlength="80" type="text" name="firstName" id="firstName" formControlName="firstName">
+                                        </div>
+                                        <div class="form-group planyo-form-item-group  col-md-8" id="row_last">
+                                            <label for="lastName" class="control-label">Last name<em>*</em></label>
+                                            <input class="with-status-border form-control" maxlength="80" type="text" name="lastName" id="lastName" formControlName="lastName">
+                                        </div>
+                                        <div class="form-group planyo-form-item-group  col-md-8" id="row_email">
+                                            <label for="email" class="control-label">Email<em>*</em></label>
+                                            <input type="email" class="with-status-border form-control" maxlength="80"  name="email" id="email" formControlName="email" [email]="validateEmail">
+                                        </div>
+                                        <div class="form-group planyo-form-item-group  col-md-8" id="row_conf_title">
+                                            <label for="conferenceTitle" class="control-label">Conference Title<em>*</em></label>
+                                            <input type="text" class="with-status-border form-control" maxlength="80" type="text" name="conferenceTitle" id="conferenceTitle" formControlName="conferenceTitle">
+                                        </div>
+                                        <div class="form-group planyo-form-item-group  col-md-8" id="row_conf_Desc">
+                                            <label for="conferenceDescription" class="control-label">Conference Description<em>*</em></label>
+                                            <textarea type="text" class="with-status-border form-control" maxlength="80" name="conferenceDescription" id="conferenceDescription" formControlName="conferenceDescription"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-button">
+                                        <label for="submit_form_1">&nbsp;</label>
+                                        <button [disabled]="!reservationDetailForm.valid" style="border-radius: 5px;" type="submit" class="btn btn-primary btn-sm" name="submit_form_1" id="submit_form_1" (click)="saveReservationDetails()">Continue</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div *ngIf="isReservationTimeForm">
+                                <h3>Reservation Details</h3>
+                                <br>
+                                <form [formGroup]="reservationTimeForm">
+                                    <div class="personal_details">
+                                        <div class="form-group planyo-form-item-group  col-md-8" id="row_startdate">
+                                            <label for="startDate" class="control-label">Date<em>*</em></label>
+                                            <input type="date" class="with-status-border form-control" maxlength="80" name="startDate" id="startDate" formControlName="startDate">
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="form-group planyo-form-item-group  col-md-4" id="row_startTime">
+                                                <label for="startTime" class="control-label">Start Time<em>*</em></label>
+                                                <input type="time" class="with-status-border form-control" maxlength="80" name="startTime" id="startTime" formControlName="startTime">
+                                            </div>
+                                            <div class="form-group planyo-form-item-group  col-md-4" id="row_endTime">
+                                                <label for="endTime" class="control-label">End Time<em>*</em></label>
+                                                <input type="time" class="with-status-border form-control" maxlength="80" name="endTime" id="endTime" formControlName="endTime">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="form-button">
+                                        <label for="submit_form_1">&nbsp;</label>
+                                        <button [disabled]="!reservationTimeForm.valid" style="border-radius: 5px;" type="submit" class="btn btn-primary btn-sm" name="submit_form_!" id="submit_form_!"(click)="saveReservationTime()">Make Reservation</button>
+                                    </div>
+                                </form>
+                            </div>
+                           <div *ngIf = "isReservationCompleteForm">
+                               <br>
+                               <br>
+                                <p style="font-weight: 100">Thank you, {{reservation_info['firstName']}} {{reservation_info['lastName']}}</p>
+                                <p style="font-weight: 100">Successfully Reserved the Conference Room({{reservation_info['conferenceRoomId']}})</p>
+                                <p style="font-weight: 100">Form {{reservation_info['roomScheduleStartTime']}} - {{reservation_info['roomScheduleEndTime']}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+

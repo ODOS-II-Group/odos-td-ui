@@ -1,0 +1,85 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: crrsui
+  name: crrsui
+  # namespace: odos-test
+spec:
+  replicas: 1
+  selector:
+    deploymentconfig: crrsui
+  template:
+    metadata:
+      labels:
+        app: crrsui
+        deploymentconfig: crrsui
+    spec:
+      containers:
+        - image: crrsui:latest
+          imagePullPolicy: Always
+          name: crrsui
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - crrsui
+        from:
+          kind: ImageStreamTag
+          name: crrsui:latest
+          # namespace: odos-test
+      type: ImageChange
+    - type: ConfigChange
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: crrsui
+spec:
+  selector:
+    docker-registry: default
+  ports:
+  - nodePort: 0
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Route
+metadata:
+  name: crrsui
+spec:
+  host: crrsui-odos-ii-test.pro-us-east-1.openshiftapps.com
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: crrsui
+    weight: 100
+  wildcardPolicy: None
+---
+kind: "Service"
+apiVersion: "v1"
+metadata:
+  name: "pg-test"
+spec:
+  type: ExternalName
+  externalName: odos.cemmpqjhgcny.us-east-1.rds.amazonaws.com
+  ports:
+    -
+      name: "postgres"
+      protocol: "TCP"
+      port: 5432
+      targetPort: 5432
+      nodePort: 0
+selector: {}

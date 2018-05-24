@@ -1,0 +1,116 @@
+
+/* ==========================================================================
+Main page styles
+========================================================================== */
+
+@media screen and (max-width: 700px){
+    .landing-title {
+        display: none;
+    }
+}
+
+.row-box {
+    margin: 20px;
+    padding-left: 100px;
+}
+
+
+
+.lib-panel {
+    margin-bottom: 20Px;
+    text-decoration: none;
+    text-align: left;
+    position: relative;
+    background: #fff;
+    box-shadow: 5px 5px 25px 0px rgba(46,61,73,0.2);
+    border-radius: 0.375rem;
+    transition: all 0.3s ease;
+
+}
+
+.lib-panel:hover, .box-shadow:hover {
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.2);
+}
+
+
+.lib-panel img {
+    width: 100%;
+    background-color: transparent;
+}
+
+.lib-panel .row,
+.lib-panel .col-md-6 {
+    background-color: #FFFFFF;
+}
+
+.lib-row {
+    padding: 20px;
+}
+
+.lib-panel .lib-row {
+    padding: 0 20px 10px 20px;
+}
+
+.lib-panel .lib-row.lib-header {
+    background-color: #FFFFFF;
+    font-size: 20px;
+    padding: 10px 20px 0 20px;
+}
+
+.lib-panel .lib-row.lib-header .lib-header-seperator {
+    height: 2px;
+    width: 26px;
+    background-color: #d9d9d9;
+    margin: 7px 0 7px 0;
+}
+
+.lib-panel .lib-row.lib-desc {
+    position: relative;
+    height: 100%;
+    display: block;
+    font-size: 13px;
+}
+.lib-panel .lib-row.lib-desc a{
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+    left: 20px;
+}
+
+.row-margin-bottom {
+    margin-bottom: 20px;
+}
+
+.box-shadow {
+    -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.10);
+    box-shadow: 5px 5px 25px 0px rgba(46,61,73,0.2);
+}
+
+.no-padding {
+    padding: 0;
+}
+
+
+
+
+.hipster {
+    display: inline-block;
+    width: 347px;
+    height: 497px;
+    background: url("../../content/images/uscis.png") no-repeat center top;
+    background-size: contain;
+}
+
+/* wait autoprefixer update to allow simple generation of high pixel density media query */
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+    .hipster {
+        background: url("../../content/images/uscis2x.png") no-repeat center top;
+        background-size: contain;
+    }
+}

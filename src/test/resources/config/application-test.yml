@@ -1,0 +1,120 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration is used for unit/integration tests.
+#
+# More information on profiles: http://www.jhipster.tech/profiles/
+# More information on configuration properties: http://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+eureka:
+    client:
+        enabled: false
+    instance:
+        appname: odos_crrs_ui
+        instanceId: odos_crrs_ui:${spring.application.instance-id:${random.value}}
+
+spring:
+    application:
+        name: odos_crrs_ui
+    jackson:
+        serialization.write_dates_as_timestamps: false
+    cache:
+        type: simple
+    jpa:
+        open-in-view: false
+        hibernate:
+            database: POSTGRESQL
+            show_sql: true
+            dialect: org.hibernate.dialect.PostgreSQL94Dialect
+            naming:
+                physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+                implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        database-platform: io.github.jhipster.domain.util.FixedPostgreSQL82Dialect
+        
+        properties:
+            hibernate.default_schema: ${databaseSchema:odos_crrs_ui}
+            hibernate.id.new_generator_mappings: true
+            hibernate.cache.use_second_level_cache: true
+            hibernate.cache.use_query_cache: false
+            hibernate.generate_statistics: true
+            hibernate.show_sql: false             
+    datasource:
+        platform: POSTGRESSQL
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:postgresql://${databaseHost:localhost}:${databasePort:5432}/${databaseName:odos_crrs_svc}?stringtype=unspecified
+        username: ${databaseAppRole:odos_crrs_ui_app}
+        password: ${databaseAppPassword}
+        tomcat:
+          validation-query: SELECT 1
+        driverClassName: org.postgresql.Driver
+    mail:
+        host: localhost
+    messages:
+        basename: i18n/messages
+    mvc:
+        favicon:
+            enabled: false
+    thymeleaf:
+        mode: XHTML
+
+liquibase:
+    contexts: test
+
+server:
+    port: 10344
+    address: localhost
+
+info:
+    project:
+        version: #project.version#
+
+# ===================================================================
+# JHipster specific properties
+#
+# Full reference is available at: http://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+jhipster:
+    async:
+        core-pool-size: 1
+        max-pool-size: 50
+        queue-capacity: 10000
+    # To test logstash appender
+    logging:
+        logstash:
+            enabled: true
+            host: localhost
+            port: 5000
+            queue-size: 512
+    mail:
+        from: test@localhost
+        base-url: http://127.0.0.1:8080
+    security:
+        authentication:
+            jwt:
+                secret: 386375357fb60d547ee53cf705c264152f967ebd
+                # Token is valid 24 hours
+                token-validity-in-seconds: 86400
+    metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
+        jmx.enabled: true
+        logs: # Reports Dropwizard metrics in the logs
+            enabled: true
+            report-frequency: 60 # in seconds
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+# to have type-safe configuration, like in the JHipsterProperties above
+#
+# More documentation is available at:
+# http://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+application:

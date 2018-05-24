@@ -1,0 +1,89 @@
+
+<section class="py-3">
+
+    <div class="row">
+        <h2 class="landing-title">
+            CONFERENCE ROOMS BUILDING {{ buildingInfo.buildingName | uppercase }}
+        </h2>
+    </div>
+    <hr>
+
+    <div class="row">
+        <div class="col-xs-7 col-sm-8"></div>
+        <div class="col-xs-5 col-sm-4">
+            <label style="font-weight: 500;"> <strong>Select a Conference Room</strong>
+            </label>
+            <select class="selectpicker" name="conferenceRoomOption" id="conferenceRoomOption" [(ngModel)]="selectedRoom">
+                <option selected="selected" *ngFor="let room_choice of buildingInfo.conferenceRooms" [ngValue]="room_choice">
+                    {{ room_choice.roomName }}
+                </option>
+            </select>
+        </div>
+
+    </div>
+
+    <br>
+    <div class="row">
+
+        <div class="col-lg-5 mb-4">
+
+            <div class="">
+                <div class="">
+                    <img src="../../content/images/building1/conference-room1.jpg" class="img-fluid " alt="">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-7">
+            <div class="form-header">
+                <h3><p class="font-weight-300 text-center h1">Conference Room: {{ selectedRoom.roomName }}</p></h3>
+                <hr>
+            </div>
+
+
+            <dl class="item-property">
+                <dt style="font-weight: 500;"><span style="background-color: #dce1e2"> LOCATION </span></dt>
+                <dd>
+                    <p> {{ buildingInfo.buildingDesc }}</p>
+                </dd>
+            </dl>
+
+            <dl class="item-property">
+                <dt style="font-weight: 500;">CURRENTLY AVAILABLE</dt>
+                <dd>
+                    <p>{{ selectedRoom.activeIndicator }}</p>
+                </dd>
+            </dl>
+
+            <dl class="param param-feature">
+                <dt style="font-weight: 500;">EQUIPMENTS PROVIDED</dt>
+                <dd>
+                    <div class="bg">
+                        <div class="chiller_cb" *ngFor="let equip of selectedRoom.equipments">
+                            <label >{{ equip.equipmentName }}</label> -  <span>{{ equip.equipmentDesc }}</span>
+                        </div>
+                    </div>
+                </dd>
+            </dl>
+
+            <dl class="item-property">
+                <dt style="font-weight: 500;">CAPACITY</dt>
+                <dd><p>{{ selectedRoom.roomCapacity }} </p></dd>
+            </dl>
+
+            <dl class="item-property">
+                <dt style="font-weight: 500;">RESERVATION</dt>
+                <dd>
+                    <a routerLink="/reservation/{{ selectedRoom.conferenceRoomId }}">
+                        <input style="border-radius: 5px;" class="btn btn-primary btn-sm" type="submit" name="reserve" id="reserve" value="Schedule a Room">
+                    </a>
+                </dd>
+            </dl>
+
+
+        </div>
+
+    </div>
+
+</section>

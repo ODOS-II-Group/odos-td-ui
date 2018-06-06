@@ -86,27 +86,41 @@ import { LOGIN_ALREADY_USED_TYPE, EMAIL_ALREADY_USED_TYPE } from '../shared/cons
     }
 
     saveReservationTime(){
-        this.date = this.reservationTimeForm.get('startDate').value;
-
-      this.reservation_info.roomScheduleStartTime = this.date + " " + this.reservationTimeForm.get('startTime').value;
-      this.reservation_info.roomScheduleEndTime = this.date + " " +  this.reservationTimeForm.get('endTime').value;
-      this.reservationService.postReservationData(this.reservation_info)
-      .subscribe((response)=>{
-          this.isReservationCompleteForm = true;
-          this.isReservationTimeForm = false;
-          this.registrationError = false;
-          setTimeout((router: Router) => {
-              this.router.navigate(['']);
-          }, 5000);
-      }, (error)=> {
-                console.log(this.error);
-                this.processError(error);
-          this.isReservationCompleteForm = false;
-          this.registrationError = true;
-          setTimeout((router: Router) => {
-              this.router.navigate(['']);
-          }, 2000);
-      } );
+      var startHour = parseInt(this.reservationTimeForm.get('startTime').value.split(":")[0]);
+      var startMinute = parseInt(this.reservationTimeForm.get('startTime').value.split(":")[1]);
+      var endHour = parseInt(this.reservationTimeForm.get('endTime').value.split(":")[0]);
+      var endMinute = parseInt(this.reservationTimeForm.get('endTime').value.split(":")[1]);
+      
+      var diff = (endHour - startHour) * 60 + (endMinute - startMinute);
+    
+      if (diff > 180) {
+      	this.error = 'Reservation time cannot exceed 3 hours';
+      	console.log(this.error);
+	    this.isReservationCompleteForm = false;
+	    this.registrationError = true;
+      } else {
+	      this.date = this.reservationTimeForm.get('startDate').value;
+	
+	      this.reservation_info.roomScheduleStartTime = this.date + " " + this.reservationTimeForm.get('startTime').value;
+	      this.reservation_info.roomScheduleEndTime = this.date + " " +  this.reservationTimeForm.get('endTime').value;
+	      this.reservationService.postReservationData(this.reservation_info)
+	      .subscribe((response)=>{
+	          this.isReservationCompleteForm = true;
+	          this.isReservationTimeForm = false;
+	          this.registrationError = false;
+	          setTimeout((router: Router) => {
+	              this.router.navigate(['']);
+	          }, 5000);
+	      }, (error)=> {
+	                console.log(this.error);
+	                this.processError(error);
+	          this.isReservationCompleteForm = false;
+	          this.registrationError = true;
+	          /*setTimeout((router: Router) => {
+	              this.router.navigate(['']);
+	          }, 2000);*/
+	      } );
+      }
     }
 
     private processError(response: HttpErrorResponse) {

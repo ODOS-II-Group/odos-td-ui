@@ -11,21 +11,24 @@ import { ResourceManagerService } from './resource-manager.service';
 })
 export class ResourceManagerComponent implements OnInit {
   
-  constructor( private conferenceRoomService:ResourceManagerService) { }
   selectedResource:string;
   buildingsData:any;
   conferenceRoomsData:any;
   equipmentsData:any;
-
+  
   resources = ["Building", "Conference Room", "Equipment"];
+  
+  constructor( private resourceManagerService:ResourceManagerService) { }
+  
   ngOnInit() {
      this.selectedResource = this.resources[0];
      this.getAllBuildings();
      this.getAllConferenceRooms();
+     this.getAllEquipmentRooms();
   }
 
   getAllBuildings(){
-      this.conferenceRoomService.getAllBuildingData().subscribe(
+      this.resourceManagerService.getAllBuildingData().subscribe(
           (response) => {
               this.buildingsData = response;
           },
@@ -35,7 +38,7 @@ export class ResourceManagerComponent implements OnInit {
       )  
   }
   getAllConferenceRooms(){
-    this.conferenceRoomService.getAllConferenceData().subscribe(
+    this.resourceManagerService.getAllConferenceRoomData().subscribe(
         (response) => {
             this.conferenceRoomsData = response;
         },
@@ -45,7 +48,7 @@ export class ResourceManagerComponent implements OnInit {
     )  
   }
   getAllEquipmentRooms(){
-    this.conferenceRoomService.getAllEquipmentData().subscribe(
+    this.resourceManagerService.getAllEquipmentData().subscribe(
         (response) => {
             this.equipmentsData = response;
         },

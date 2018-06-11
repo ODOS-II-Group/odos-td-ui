@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-12">
-    <h1 style="margin-left: 440px;">Resource Managment</h1>
+    <h1 style="margin-left: 440px;">Resource Management</h1>
     <hr>
     <div class="col-xs-5 col-sm-4 pull-right">
       <label style="font-weight: 500;">
@@ -20,13 +20,13 @@
           <thead>
             <tr jhisort="" ng-reflect-predicate="id" ng-reflect-ascending="true" ng-reflect-callback="function () { [native code] }">
               <th jhisortby="id" ng-reflect-jhi-sort-by="id">
-                <span>BuildingID</span>
+                <span>Building ID</span>
               </th>
               <th jhisortby="build-name" ng-reflect-jhi-sort-by="build-name">
-                <span>BuildingName</span>
+                <span>Building Name</span>
               </th>
               <th jhisortby="build-desc" ng-reflect-jhi-sort-by="build-desc">
-                <span>BuildingDescription</span>
+                <span>Building Description</span>
               </th>
               <th jhisortby="build-modif" ng-reflect-jhi-sort-by="build-modif">
                 <span></span>
@@ -42,19 +42,13 @@
               <td>{{building['buildingDesc']}}</td>
               <td class="text-right">
                 <div class="btn-group flex-btn-group-container">
-                  <button class="btn btn-info btn-sm" type="submit" tabindex="0" ng-reflect-router-link="../resource-management,system">
-                    <span class="fa fa-eye"></span>
-                    <span class="d-none d-md-inline">View</span>
-                  </button>
-                  <button class="btn btn-primary btn-sm" queryparamshandling="merge" replaceurl="true" type="submit" tabindex="0" ng-reflect-query-params-handling="merge"
-                    ng-reflect-replace-url="true" ng-reflect-router-link="/,[object Object]">
-                    <span class="fa fa-pencil"></span>
-                    <span class="d-none d-md-inline">Edit</span>
-                  </button>
-                  <button class="btn btn-danger btn-sm" queryparamshandling="merge" replaceurl="true" type="submit" tabindex="0" ng-reflect-query-params-handling="merge"
-                    ng-reflect-replace-url="true" ng-reflect-router-link="/,[object Object]">
-                    <span class="fa fa-remove"></span>
-                    <span class="d-none d-md-inline">Delete</span>
+                  <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'resource-manager/building/'+ building['buildingId'] + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
                   </button>
                 </div>
               </td>
@@ -69,14 +63,17 @@
         <table class="table table-striped">
           <thead>
             <tr jhisort="" ng-reflect-predicate="id" ng-reflect-ascending="true" ng-reflect-callback="function () { [native code] }">
+              <th jhisortby="building-name" ng-reflect-jhi-sort-by="building-name">
+                <span>Building</span>
+              </th>
               <th jhisortby="id" ng-reflect-jhi-sort-by="id">
-                <span>ConferenceID</span>
+                <span>Room ID</span>
               </th>
               <th jhisortby="conference-name" ng-reflect-jhi-sort-by="conference-name">
-                  <span>ConferenceName</span>
+                  <span>Room Name</span>
                 </th>
               <th jhisortby="conference-num" ng-reflect-jhi-sort-by="conference-num">
-                  <span>ConferenceNum</span>
+                  <span>Room Num</span>
               </th>
               <th jhisortby="conference-capacity" ng-reflect-jhi-sort-by="conference-capacity">
                 <span>Capacity</span>
@@ -84,32 +81,29 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let conferenceRoom of conferenceRoomsData">
-              <td>
-                <a ng-reflect-router-link="../resource-management,system" href="#/resource-management/system">{{conferenceRoom['conferenceRoomId']}}</a>
-              </td>
-              <td>{{conferenceRoom['roomName']}}</td>
-              <td>{{conferenceRoom['roomNum']}}</td>
-              <td>{{conferenceRoom['roomCapacity']}}</td>
-              <td class="text-right">
-                <div class="btn-group flex-btn-group-container">
-                  <button class="btn btn-info btn-sm" type="submit" tabindex="0" ng-reflect-router-link="../resource-management,system">
-                    <span class="fa fa-eye"></span>
-                    <span class="d-none d-md-inline">View</span>
-                  </button>
-                  <button class="btn btn-primary btn-sm" queryparamshandling="merge" replaceurl="true" type="submit" tabindex="0" ng-reflect-query-params-handling="merge"
-                    ng-reflect-replace-url="true" ng-reflect-router-link="/,[object Object]">
-                    <span class="fa fa-pencil"></span>
-                    <span class="d-none d-md-inline">Edit</span>
-                  </button>
-                  <button class="btn btn-danger btn-sm" queryparamshandling="merge" replaceurl="true" type="submit" tabindex="0" ng-reflect-query-params-handling="merge"
-                    ng-reflect-replace-url="true" ng-reflect-router-link="/,[object Object]">
-                    <span class="fa fa-remove"></span>
-                    <span class="d-none d-md-inline">Delete</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
+          	<ng-container *ngFor="let building of buildingsData">
+	            <tr *ngFor="let conferenceRoom of building['conferenceRooms']">
+	              <td>{{building['buildingName']}}</td>
+	              <td>
+	                <a ng-reflect-router-link="../resource-management,system" href="#/resource-management/system">{{conferenceRoom['conferenceRoomId']}}</a>
+	              </td>
+	              <td>{{conferenceRoom['roomName']}}</td>
+	              <td>{{conferenceRoom['roomNum']}}</td>
+	              <td>{{conferenceRoom['roomCapacity']}}</td>
+	              <td class="text-right">
+	                <div class="btn-group flex-btn-group-container">
+	                  <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'resource-manager/conferenceRoom/'+ conferenceRoom['conferenceRoomId'] + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                  	  </button>
+	                </div>
+	              </td>
+            	</tr>
+            </ng-container>
           </tbody>
         </table>
       </div>
@@ -117,17 +111,24 @@
     <div *ngIf="selectedResource=='Equipment'">
       <h1>{{selectedResource}}</h1>
       <div class="table-responsive">
+      	 <div align="right">
+      		<button class="btn btn-success btn-sm" queryparamshandling="merge" replaceurl="true" type="submit" tabindex="0" ng-reflect-query-params-handling="merge"
+                    ng-reflect-replace-url="true" ng-reflect-router-link="/,[object Object]">
+                    <span class="fa fa-plus"></span>
+                    <span class="d-none d-md-inline">Create</span>
+           </button>
+         </div>
         <table class="table table-striped">
           <thead>
             <tr jhisort="" ng-reflect-predicate="id" ng-reflect-ascending="true" ng-reflect-callback="function () { [native code] }">
               <th jhisortby="id" ng-reflect-jhi-sort-by="id">
-                <span>EquipmentID</span>
+                <span>Equipment ID</span>
               </th>
               <th jhisortby="equipment-name" ng-reflect-jhi-sort-by="equipment-name">
-                <span>EquipmentName</span>
+                <span>Equipment Name</span>
               </th>
               <th jhisortby="equipment-capacity" ng-reflect-jhi-sort-by="equipment-capacity">
-                <span>EquipmentDesc</span>
+                <span>Equipment Description</span>
               </th>
               <th jhisortby="equipment-modif" ng-reflect-jhi-sort-by="equipment-modif">
                 <span></span>
@@ -135,92 +136,21 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr *ngFor="let equipment of equipmentsData">
               <td>
-                <a ng-reflect-router-link="../resource-management,system" href="#/resource-management/system">1</a>
+                <a ng-reflect-router-link="../resource-management,system" href="#/resource-management/system">{{equipment['equipmentId']}}</a>
               </td>
-              <td>TV</td>
-              <td>Samsung 64 inch 4K LED TV</td>
+	          <td>{{equipment['equipmentName']}}</td>
+	          <td>{{equipment['equipmentDesc']}}</td>
               <td class="text-right">
                 <div class="btn-group flex-btn-group-container">
-                  <button class="btn btn-info btn-sm" type="submit" tabindex="0" ng-reflect-router-link="../user-management,system">
-                    <span class="fa fa-eye"></span>
-                    <span class="d-none d-md-inline">View</span>
-                  </button>
-                  <button class="btn btn-primary btn-sm" queryparamshandling="merge" replaceurl="true" type="submit" tabindex="0" ng-reflect-query-params-handling="merge"
-                    ng-reflect-replace-url="true" ng-reflect-router-link="/,[object Object]">
-                    <span class="fa fa-pencil"></span>
-                    <span class="d-none d-md-inline">Edit</span>
-                  </button>
-                  <button class="btn btn-danger btn-sm" queryparamshandling="merge" replaceurl="true" type="submit" tabindex="0" ng-reflect-query-params-handling="merge"
-                    ng-reflect-replace-url="true" ng-reflect-router-link="/,[object Object]">
-                    <span class="fa fa-remove"></span>
-                    <span class="d-none d-md-inline">Delete</span>
-                  </button>
-                  <button class="btn btn-success btn-sm" queryparamshandling="merge" replaceurl="true" type="submit" tabindex="0" ng-reflect-query-params-handling="merge"
-                    ng-reflect-replace-url="true" ng-reflect-router-link="/,[object Object]">
-                    <span class="fa fa-plus"></span>
-                    <span class="d-none d-md-inline">Create</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <a ng-reflect-router-link="../user-management,admin" href="#/user-management/admin">2</a>
-              </td>
-              <td>Telephone</td>
-              <td>CISCO clear audio, hands-free capabilities</td>
-              <td class="text-right">
-                <div class="btn-group flex-btn-group-container">
-                  <button class="btn btn-info btn-sm" type="submit" tabindex="0" ng-reflect-router-link="../user-management,admin">
-                    <span class="fa fa-eye"></span>
-                    <span class="d-none d-md-inline">View</span>
-                  </button>
-                  <button class="btn btn-primary btn-sm" queryparamshandling="merge" replaceurl="true" type="submit" tabindex="0" ng-reflect-query-params-handling="merge"
-                    ng-reflect-replace-url="true" ng-reflect-router-link="/,[object Object]">
-                    <span class="fa fa-pencil"></span>
-                    <span class="d-none d-md-inline">Edit</span>
-                  </button>
-                  <button class="btn btn-danger btn-sm" queryparamshandling="merge" replaceurl="true" type="submit" tabindex="0" ng-reflect-query-params-handling="merge"
-                    ng-reflect-replace-url="true" ng-reflect-router-link="/,[object Object]" disabled="">
-                    <span class="fa fa-remove"></span>
-                    <span class="d-none d-md-inline">Delete</span>
-                  </button>
-                  <button class="btn btn-success btn-sm" queryparamshandling="merge" replaceurl="true" type="submit" tabindex="0" ng-reflect-query-params-handling="merge"
-                    ng-reflect-replace-url="true" ng-reflect-router-link="/,[object Object]">
-                    <span class="fa fa-plus"></span>
-                    <span class="d-none d-md-inline">Create</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <a ng-reflect-router-link="../user-management,user" href="#/user-management/user">3</a>
-              </td>
-              <td>Projector</td>
-              <td>LG High Def</td>
-              <td class="text-right">
-                <div class="btn-group flex-btn-group-container">
-                  <button class="btn btn-info btn-sm" type="submit" tabindex="0" ng-reflect-router-link="../user-management,user">
-                    <span class="fa fa-eye"></span>
-                    <span class="d-none d-md-inline">View</span>
-                  </button>
-                  <button class="btn btn-primary btn-sm" queryparamshandling="merge" replaceurl="true" type="submit" tabindex="0" ng-reflect-query-params-handling="merge"
-                    ng-reflect-replace-url="true" ng-reflect-router-link="/,[object Object]">
-                    <span class="fa fa-pencil"></span>
-                    <span class="d-none d-md-inline">Edit</span>
-                  </button>
-                  <button class="btn btn-danger btn-sm" queryparamshandling="merge" replaceurl="true" type="submit" tabindex="0" ng-reflect-query-params-handling="merge"
-                    ng-reflect-replace-url="true" ng-reflect-router-link="/,[object Object]">
-                    <span class="fa fa-remove"></span>
-                    <span class="d-none d-md-inline">Delete</span>
-                  </button>
-                  <button class="btn btn-success btn-sm" queryparamshandling="merge" replaceurl="true" type="submit" tabindex="0" ng-reflect-query-params-handling="merge"
-                    ng-reflect-replace-url="true" ng-reflect-router-link="/,[object Object]">
-                    <span class="fa fa-plus"></span>
-                    <span class="d-none d-md-inline">Create</span>
+                  <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'resource-manager/equipment/'+ equipment['equipmentId'] + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                        <span class="fa fa-pencil"></span>
+                        <span class="d-none d-md-inline">Edit</span>
                   </button>
                 </div>
               </td>

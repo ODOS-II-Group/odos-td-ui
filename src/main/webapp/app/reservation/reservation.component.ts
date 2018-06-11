@@ -86,12 +86,12 @@ import { LOGIN_ALREADY_USED_TYPE, EMAIL_ALREADY_USED_TYPE } from '../shared/cons
     }
 
     saveReservationTime(){
-      var startHour = parseInt(this.reservationTimeForm.get('startTime').value.split(":")[0]);
-      var startMinute = parseInt(this.reservationTimeForm.get('startTime').value.split(":")[1]);
-      var endHour = parseInt(this.reservationTimeForm.get('endTime').value.split(":")[0]);
-      var endMinute = parseInt(this.reservationTimeForm.get('endTime').value.split(":")[1]);
+      let startHour = parseInt(this.reservationTimeForm.get('startTime').value.split(":")[0]);
+      let startMinute = parseInt(this.reservationTimeForm.get('startTime').value.split(":")[1]);
+      let endHour = parseInt(this.reservationTimeForm.get('endTime').value.split(":")[0]);
+      let endMinute = parseInt(this.reservationTimeForm.get('endTime').value.split(":")[1]);
       
-      var diff = (endHour - startHour) * 60 + (endMinute - startMinute);
+      let diff = (endHour - startHour) * 60 + (endMinute - startMinute);
     
       if (diff > 180) {
       	this.error = 'Reservation time cannot exceed 3 hours';

@@ -1,0 +1,64 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myUserLabel">
+            Edit Conference Room Information</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!conferenceRoom.conferenceRoomId">
+            <label>ID</label>
+            <input type="text" class="form-control" name="id"
+                   [(ngModel)]="conferenceRoom.conferenceRoomId" readonly>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Room Name</label>
+            <input type="text" class="form-control" name="fName" #conferenceRoomNameInput="ngModel"
+                   [(ngModel)]="conferenceRoom.roomName" maxlength="200">
+
+            <div *ngIf="conferenceRoomNameInput && conferenceRoomNameInput.invalid">
+                <small class="form-text text-danger"
+                   *ngIf="conferenceRoomNameInput.errors.maxlength">
+                    This field cannot be longer than 200 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Room Number</label>
+            <input type="number" class="form-control" name="conferenceRoomNum" #conferenceRoomNumInput="ngModel"
+                   [(ngModel)]="conferenceRoom.roomNum" maxlength="10">
+
+            <div *ngIf="conferenceRoomNumInput.dirty && conferenceRoomNumInput.invalid">
+                <small class="form-text text-danger"
+                   *ngIf="conferenceRoomNumInput.errors.maxlength"
+                  >
+                    This field can only take numbers and cannot be longer than 10 digits.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Room Capacity</label>
+            <input type="number" class="form-control" name="conferenceRoomCapacity" #conferenceRoomCapacityInput="ngModel"
+                   [(ngModel)]="conferenceRoom.roomCapacity" maxlength="10">
+
+            <div *ngIf="conferenceRoomCapacityInput.dirty && conferenceRoomCapacityInput.invalid">
+                <small class="form-text text-danger"
+                   *ngIf="conferenceRoomCapacityInput.errors.maxlength"
+                  >
+                    This field can only take numbers and cannot be longer than 10 digits.
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span
+           >Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-floppy-o"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

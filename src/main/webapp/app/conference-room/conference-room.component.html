@@ -81,7 +81,7 @@
 
             <dl class="item-property">
                 <dd>
-                    <input style="border-radius: 5px;" class="btn btn-primary btn-sm" (click)="showRoomDetails()" mat-raised-button type="submit"
+                    <input style="border-radius: 5px;" class="btn btn-primary btn-sm" (click)="showRoomDetails(selectedRoom.conferenceRoomId)" mat-raised-button type="submit"
                     name="roomDetails" id="roomDetails" value="Scheduled Detail">
                     <a routerLink="/reservation/{{ selectedRoom.conferenceRoomId }}">
                         <input style="border-radius: 5px;" class="btn btn-primary btn-sm pull-right" type="submit" name="reserve" id="reserve" value="Schedule a Room">

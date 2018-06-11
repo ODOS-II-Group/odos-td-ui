@@ -2,6 +2,7 @@ import './vendor.ts';
 
 import { NgModule, Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Ng2Webstorage, LocalStorageService, SessionStorageService  } from 'ngx-webstorage';
 import { JhiEventManager } from 'ng-jhipster';
@@ -23,6 +24,9 @@ import { OdosCrrsUiEntityModule } from './entities/entity.module';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule }  from '@angular/common';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTableModule } from '@angular/material/table';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import {
     JhiMainComponent,
@@ -32,6 +36,7 @@ import {
     PageRibbonComponent,
     ErrorComponent
 } from './layouts';
+import { ScheduledRoomInformationComponent } from './scheduled-room-information/scheduled-room-information.component';
 
 
 @NgModule({
@@ -50,7 +55,13 @@ import {
         OdosCrrsUiEntityModule,
         CommonModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatCheckboxModule,
+        MatDialogModule,
+        MatTableModule
+
+        
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
@@ -60,6 +71,7 @@ import {
         PageRibbonComponent,
         FooterComponent,
         CapitalizeFirstPipe,
+        ScheduledRoomInformationComponent
     ],
     providers: [
         ProfileService,
@@ -98,6 +110,9 @@ import {
                 Injector
             ],
         }
+    ],
+    entryComponents: [
+        ScheduledRoomInformationComponent
     ],
     bootstrap: [ JhiMainComponent ]
 })

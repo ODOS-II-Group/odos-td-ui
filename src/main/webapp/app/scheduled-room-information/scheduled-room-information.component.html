@@ -1,0 +1,32 @@
+<mat-table  [dataSource]="dataSource"  class="mat-elevation-z8">
+   
+  <ng-container matColumnDef="roomScheduleStartTime">
+    <mat-header-cell *matHeaderCellDef> FROM </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.roomScheduleStartTime}} </mat-cell>
+  </ng-container>
+
+  
+  <ng-container matColumnDef="roomScheduleEndTime">
+    <mat-header-cell *matHeaderCellDef> TO </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.roomScheduleEndTime}} </mat-cell>
+  </ng-container>
+
+   
+  <ng-container matColumnDef="conferenceTitle">
+    <mat-header-cell *matHeaderCellDef>CONFERENCE TITLE </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.conferenceTitle}} </mat-cell>
+  </ng-container>
+
+   
+  <ng-container matColumnDef="lastName">
+    <mat-header-cell *matHeaderCellDef> LAST NAME </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.lastName}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+<hr>
+<button class="btn btn-primary btn-sm" mat-raised-button mat-dialog-close>Ok</button>

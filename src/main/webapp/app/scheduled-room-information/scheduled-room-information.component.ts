@@ -5,11 +5,13 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   selector: 'jhi-scheduled-room-information',
   templateUrl: './scheduled-room-information.component.html',
-  styles: []
+  styleUrls: [
+    'scheduled-room-information.scss'
+  ]
 })
 export class ScheduledRoomInformationComponent implements OnInit {
  
-  displayedColumns = ['roomScheduleStartTime', 'roomScheduleEndTime', 'conferenceTitle', 'lastName'];
+  displayedColumns = ['roomScheduleStartTime', 'roomScheduleEndTime', 'conferenceTitle'];
   dataSource: any;
 
 

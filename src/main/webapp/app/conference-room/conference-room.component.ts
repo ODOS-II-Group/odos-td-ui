@@ -15,9 +15,7 @@ import { ReservationService } from '../reservation/reservation.service';
 @Component({
     selector: 'jhi-conference-room',
     templateUrl: './conference-room.component.html',
-    styleUrls: [
-        'conference-room.scss'
-    ]
+    styleUrls:[ 'conference-room.scss' ]
 
 })
 export class ConferenceRoomComponent implements OnInit {

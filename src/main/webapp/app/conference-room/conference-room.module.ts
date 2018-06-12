@@ -4,10 +4,13 @@ import { RouterModule } from '@angular/router';
 import { OdosCrrsUiSharedModule } from '../shared';
 import { CONFERENCE_ROOM_ROUTE, ConferenceRoomComponent } from "./";
 import { ConferenceRoomService } from './conference-room.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
         OdosCrrsUiSharedModule,
+        FormsModule,
+        ReactiveFormsModule,
         RouterModule.forChild([ CONFERENCE_ROOM_ROUTE ])
     ],
     declarations: [

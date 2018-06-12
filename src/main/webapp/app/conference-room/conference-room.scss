@@ -23,3 +23,34 @@
     color: brown;
     font-size: 1.3em;
 }
+.calendar-days {
+    width: 50px;
+    height: 50px;
+    background: #669999;
+    border: 3px solid #c2c2c2;
+    float: left;
+    text-align: center;
+    padding-top: 11px;
+}
+#calendar-container {
+    width: 350px;
+}
+.inactive,.isBeforeToday{
+    opacity: 0.5;
+    pointer-events:none;
+}
+.isWeekend{
+    background: rebeccapurple;
+    opacity: 0.5;
+    pointer-events:none;
+}
+.today{
+    color: red;
+}
+.selected {
+    background: peru;
+    opacity: 0.6;
+}
+.reserved {
+    color: blueviolet;
+}

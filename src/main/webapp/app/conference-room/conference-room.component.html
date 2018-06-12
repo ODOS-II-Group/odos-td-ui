@@ -40,47 +40,91 @@
                 <h3><p class="font-weight-300 text-center h1">Conference Room: {{ selectedRoom.roomName }}</p></h3>
                 <hr>
             </div>
+            <div class="row">
 
-
-            <dl class="item-property">
-                <dt style="font-weight: 500;"><span style="background-color: #dce1e2"> LOCATION </span></dt>
-                <dd>
-                    <p> {{ buildingInfo.buildingDesc }}</p>
-                </dd>
-            </dl>
-
-            <dl class="item-property">
-                <dt style="font-weight: 500;">CURRENTLY AVAILABLE</dt>
-                <dd>
-                    <p>{{ selectedRoom.activeIndicator }}</p>
-                </dd>
-            </dl>
-
-            <dl class="param param-feature">
-                <dt style="font-weight: 500;">EQUIPMENTS PROVIDED</dt>
-                <dd>
-                    <div class="bg">
-                        <div class="chiller_cb" *ngFor="let equip of selectedRoom.equipments">
-                            <label >{{ equip.equipmentName }}</label> -  <span>{{ equip.equipmentDesc }}</span>
+                <div class="col-lg-6">
+    
+                    <dl class="item-property">
+                        <dt style="font-weight: 500;"><span style="background-color: #dce1e2"> LOCATION </span></dt>
+                        <dd>
+                            <p> {{ buildingInfo.buildingDesc }}</p>
+                        </dd>
+                    </dl>
+        
+                    <dl class="item-property">
+                        <dt style="font-weight: 500;">CURRENTLY AVAILABLE</dt>
+                        <dd>
+                            <p>{{ selectedRoom.activeIndicator }}</p>
+                        </dd>
+                    </dl>
+        
+                    <dl class="param param-feature">
+                        <dt style="font-weight: 500;">EQUIPMENTS PROVIDED</dt>
+                        <dd>
+                            <div class="bg">
+                                <div class="chiller_cb" *ngFor="let equip of selectedRoom.equipments">
+                                    <label >{{ equip.equipmentName }}</label> -  <span>{{ equip.equipmentDesc }}</span>
+                                </div>
+                            </div>
+                        </dd>
+                    </dl>
+        
+                    <dl class="item-property">
+                        <dt style="font-weight: 500;">CAPACITY</dt>
+                        <dd><p>{{ selectedRoom.roomCapacity }} </p></dd>
+                    </dl>
+        
+                    <!-- <dl class="item-property">
+                        <dt style="font-weight: 500;">RESERVATION</dt>
+                        <dd>
+                            <a routerLink="/reservation/{{ selectedRoom.conferenceRoomId }}">
+                                <input style="border-radius: 5px;" class="btn btn-primary btn-sm" type="submit" name="reserve" id="reserve" value="Schedule a Room">
+                            </a>
+                        </dd>
+                    </dl> -->
+                </div>
+                <div class="col-lg-6">
+                    <dir class="flex-container flex-center">
+                        <div id='calendar-container' class='flex-container flex-column'>
+                            <!-- <div>
+                            <form [formGroup]='dateForm' class='flex-container flex-center'>
+                                <input type="text" name='dateFrom' formControlName='dateFrom' placeholder='From Date'>
+                                <div class="width-5"></div>
+                                <input type="text" placeholder='To Date' name='dateTo' formControlName='dateTo'>
+                                <div class="width-5"></div>
+                                <button class='primary' (click)='reserve()'>Reserve</button>
+                            </form>
+                            </div>
+                            <div *ngIf='isReserved' class='reserved'>
+                                {{isReserved}}
+                            </div> -->
+                            <div class="height-20px"></div>
+                            <div class=' flex-container flex-center-horz '>
+                                <span class='fa fa-chevron-left ' (click)='previousMonth() '></span>
+                                &nbsp;
+                                <span>{{date.format('MMMM ')}} {{date.format('YYYY ')}}</span>
+                                &nbsp;
+                                <span class='fa fa-chevron-right ' (click)='nextMonth() '></span>
+                            </div>
+                            <br>
+                            <div class='flex-container'>
+                                <div class='calendar-days flex-container flex-center '>S</div>
+                                <div class='calendar-days flex-container flex-center '>M</div>
+                                <div class='calendar-days flex-container flex-center '>T</div>
+                                <div class='calendar-days flex-container flex-center '>W</div>
+                                <div class='calendar-days flex-container flex-center '>T</div>
+                                <div class='calendar-days flex-container flex-center '>F</div>
+                                <div class='calendar-days flex-container flex-center '>S</div>
+                            </div>
+                            <div class='flex-container flex-wrap '>
+                                <div *ngFor="let day of daysArr">
+                                    <div routerLink="/reservation/{{ selectedRoom.conferenceRoomId }}" class='calendar-days flex-container flex-center' (click)='selectedDate(day)' [ngClass]="{'inactive ': !day, 'isBeforeToday': isbeforeToday(day),'isWeekend': isweekend(day),'selected': isSelected(day), 'today': todayCheck(day)}">{{day?.date()}}</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </dd>
-            </dl>
-
-            <dl class="item-property">
-                <dt style="font-weight: 500;">CAPACITY</dt>
-                <dd><p>{{ selectedRoom.roomCapacity }} </p></dd>
-            </dl>
-
-            <dl class="item-property">
-                <dt style="font-weight: 500;">RESERVATION</dt>
-                <dd>
-                    <a routerLink="/reservation/{{ selectedRoom.conferenceRoomId }}">
-                        <input style="border-radius: 5px;" class="btn btn-primary btn-sm" type="submit" name="reserve" id="reserve" value="Schedule a Room">
-                    </a>
-                </dd>
-            </dl>
-
+                    </dir>
+                </div>
+            </div>
 
         </div>
 

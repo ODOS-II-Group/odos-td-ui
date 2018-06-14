@@ -7,6 +7,7 @@ import {Router, ActivatedRoute, Params, Data, RouterStateSnapshot, ActivatedRout
 import { Account, LoginModalService, Principal } from "../shared";
 import { ConferenceRoomService } from './conference-room.service';
 import {StateStorageService} from "../shared/auth/state-storage.service";
+
 import * as moment from 'moment';
 import {
     FormBuilder,
@@ -85,6 +86,7 @@ export class ConferenceRoomComponent implements OnInit {
         });
 
         this.registerAuthenticationSuccess();
+
     }
 
     todayCheck(day){
@@ -116,8 +118,8 @@ export class ConferenceRoomComponent implements OnInit {
         return day < moment().startOf('day');
     }
     public isweekend(day){
-        console.log("Number ",moment().format('dddd'));
-        // return moment().format('Sun') ;
+        console.log("Number ",moment().weekday(7).isSame(day, 'week'));
+        // return moment().weekday(7).isSame(day, 'week');
      }
 
     public isSelected(day) {
@@ -138,6 +140,9 @@ export class ConferenceRoomComponent implements OnInit {
     
     public selectedDate(day) {
         let dayFormatted = day.format('MM/DD/YYYY');
+
+        this.conferenceRoomService.addDate(dayFormatted);
+
         if (this.dateForm.valid) {
           this.dateForm.setValue({ dateFrom: null, dateTo: null });
           return;
@@ -150,6 +155,7 @@ export class ConferenceRoomComponent implements OnInit {
               this.dateForm.get('dateTo').patchValue(dayFormatted);
             }
         }
+        console.log("Date Clicked at Conference room", dayFormatted);
     }
 
     createCalendar(month){

@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router}  from '@angular/router';
 import { FormGroup, Validators, FormControl  } from '@angular/forms';
 import { ReservationService } from './reservation.service';
 import { HttpErrorResponse } from '@angular/common/http';
-
+import { ConferenceRoomService } from './../conference-room/conference-room.service';
 import { LOGIN_ALREADY_USED_TYPE, EMAIL_ALREADY_USED_TYPE } from '../shared/constants/error.constants';
 
   @Component({
@@ -35,6 +35,7 @@ import { LOGIN_ALREADY_USED_TYPE, EMAIL_ALREADY_USED_TYPE } from '../shared/cons
     isReservationDetailForm: boolean = true;
     isReservationTimeForm: boolean = false;
     isReservationCompleteForm: boolean = false;
+    selectedDate:Date;
 
     reservation_info = {
           'requestorId':'',
@@ -51,6 +52,7 @@ import { LOGIN_ALREADY_USED_TYPE, EMAIL_ALREADY_USED_TYPE } from '../shared/cons
         private router: Router,
         private route: ActivatedRoute,
         private reservationService: ReservationService,
+        private conferenceRoomService: ConferenceRoomService,
     ) { }
 
     ngOnInit() {
@@ -74,6 +76,21 @@ import { LOGIN_ALREADY_USED_TYPE, EMAIL_ALREADY_USED_TYPE } from '../shared/cons
       });
 
       this.registrationError = false;
+
+    
+      this.conferenceRoomService.cast.subscribe(
+            (newDate) =>{
+                this.selectedDate = newDate;
+                console.log("Date clicked at reservation 222", newDate);
+                this.reservationTimeForm.get('startDate').patchValue(this.selectedDate);
+            },
+            (error)=>{
+                console.log(error);
+            }
+       
+        );
+    console.log("Date clicked at reservation ", this.selectedDate);
+
     }
 
     saveReservationDetails(){

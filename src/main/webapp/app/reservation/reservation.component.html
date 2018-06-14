@@ -112,8 +112,8 @@
                                 <form [formGroup]="reservationTimeForm">
                                     <div class="personal_details">
                                         <div class="form-group planyo-form-item-group  col-md-8" id="row_startdate">
-                                            <label for="startDate" class="control-label">Date<em>*</em></label>
-                                            <input type="date" class="with-status-border form-control" maxlength="80" name="startDate" id="startDate" formControlName="startDate">
+                                            <label for="startDate" class="control-label">Date<em>*</em></label> {{selectedDate}}
+                                            <input type="text" class="with-status-border form-control" maxlength="80" name="startDate" id="startDate" formControlName="startDate">
                                         </div>
                                         <br>
                                         <div class="row">

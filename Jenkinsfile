@@ -18,10 +18,12 @@ pipeline {
         }
         stage('Build') {
             steps {
+              nodejs('stable') {
                 script{
                   Common.slack 'Building...'
                   Common.jHipsterBuild()
                 }
+              }
             }
         }
         stage('liquibase') {

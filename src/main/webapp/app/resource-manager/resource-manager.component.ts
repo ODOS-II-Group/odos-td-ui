@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Principal } from '../shared';
 import { ResourceManagerService } from './resource-manager.service';
+import { JhiEventManager } from 'ng-jhipster';
 
 @Component({
   selector: 'jhi-resource-manager',
@@ -18,13 +19,21 @@ export class ResourceManagerComponent implements OnInit {
   
   resources = ["Building", "Conference Room", "Equipment"];
   
-  constructor( private resourceManagerService:ResourceManagerService) { }
+  constructor( private resourceManagerService:ResourceManagerService,
+                private eventManager: JhiEventManager) { }
   
   ngOnInit() {
      this.selectedResource = this.resources[0];
      this.getAllBuildings();
      this.getAllConferenceRooms();
      this.getAllEquipmentRooms();
+     this.registerChangeInResources();
+  }
+  
+  registerChangeInResources() {
+    this.eventManager.subscribe('buildingListModification', (response) => this.getAllBuildings());
+    this.eventManager.subscribe('conferenceRoomListModification', (response) => this.getAllConferenceRooms());
+    this.eventManager.subscribe('equipmentListModification', (response) => this.getAllEquipmentRooms());
   }
 
   getAllBuildings(){

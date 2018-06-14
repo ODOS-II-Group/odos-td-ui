@@ -118,6 +118,9 @@ export class ResourceEquipmentDialogComponent implements OnInit {
         if (this.equipment.equipmentId !== null) {
             this.resourceManagerService.updateEquipment(this.equipment).subscribe((response) => this.onSaveSuccess(response), () => this.onSaveError());
         }
+        else {
+            this.resourceManagerService.createEquipment(this.equipment).subscribe((response) => this.onSaveSuccess(response), () => this.onSaveError());
+        }
     }
 
     private onSaveSuccess(result) {

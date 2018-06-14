@@ -18,7 +18,7 @@ import { ResourceBuildingDialogComponent,
         RouterModule.forChild([ RESOURCE_MANAGER_ROUTE ]),
         RouterModule.forChild([ buildingDialogRoute ]),
         RouterModule.forChild([ conferenceRoomDialogRoute ]),
-        RouterModule.forChild([ equipmentDialogRoute ])
+        RouterModule.forChild( equipmentDialogRoute )
     ],
     declarations: [
         ResourceManagerComponent, 

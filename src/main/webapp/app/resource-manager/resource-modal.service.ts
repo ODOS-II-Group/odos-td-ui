@@ -8,6 +8,7 @@ import { BuildingInfo, RoomInfo, EquipmentInfo } from '../conference-room';
 @Injectable()
 export class ResourceModalService {
     private ngbModalRef: NgbModalRef;
+    private equipmentInfo: EquipmentInfo;
 
     constructor(
         private modalService: NgbModal,
@@ -42,6 +43,11 @@ export class ResourceModalService {
                     this.ngbModalRef = this.equipmentModalRef(component, <EquipmentInfo>response);
                     resolve(this.ngbModalRef);
                 });
+            }
+            if (resource === 'Equipment' && !id) {
+                const equipmentInfo = new EquipmentInfo(0, "", "");
+                this.ngbModalRef = this.equipmentModalRef(component, equipmentInfo);
+                resolve(this.ngbModalRef);
             }
         });
     }

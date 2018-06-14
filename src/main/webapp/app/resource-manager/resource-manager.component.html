@@ -113,7 +113,8 @@
       <div class="table-responsive">
       	 <div align="right">
       		<button class="btn btn-success btn-sm" queryparamshandling="merge" replaceurl="true" type="submit" tabindex="0" ng-reflect-query-params-handling="merge"
-                    ng-reflect-replace-url="true" ng-reflect-router-link="/,[object Object]">
+                    ng-reflect-replace-url="true" 
+					[routerLink]="['/', { outlets: { popup: 'resource-manager/equipment/create'} }]">
                     <span class="fa fa-plus"></span>
                     <span class="d-none d-md-inline">Create</span>
            </button>

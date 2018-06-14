@@ -24,8 +24,15 @@ export const conferenceRoomDialogRoute: Route = {
         outlet: 'popup'
     };
 
-export const equipmentDialogRoute: Route = {
+export const equipmentDialogRoute: Routes = [
+    {
+        path: 'resource-manager/equipment/create',
+        component: ResourceDialogComponent,
+        outlet: 'popup'
+    },
+    {
         path: 'resource-manager/equipment/:equipmentId/edit',
         component: ResourceDialogComponent,
         outlet: 'popup'
-    };
+    }
+];

@@ -8,9 +8,9 @@
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" [hidden]="!equipment.equipmentId">
+        <div class="form-group" [hidden]="equipment.equipmentId === 0">
             <label>ID</label>
-            <input type="text" class="form-control" name="id"
+            <input type="text" class="form-control" name="id" 
                    [(ngModel)]="equipment.equipmentId" readonly>
         </div>
         <div class="form-group">

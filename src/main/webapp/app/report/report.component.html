@@ -19,26 +19,13 @@
                 {{ building.buildingName | uppercase }}
             </option>
         </select>
+        
         <br>
         <br>
-
-        <label style="font-weight: 500;">
-            <strong>Conference Rooms :</strong>
-        </label>
-
-        <select class="selectpicker" name="conferenceRoomOption" id="conferenceRoomOption" [(ngModel)]="roomData" (ngModelChange)="onChangeRoom($event)">
-            <option [ngValue]="undefined" hidden selected> Select Room ... </option>
-            <option selected="selected" *ngFor="let room of selectedRoom"  [ngValue]="room">
-                {{ room.roomName | uppercase }}
-            </option>
-        </select>
-
-        <br>
-        <br>
-
-        <label style="display: block;text-align: center;">
-           A report for occupancy and vacancy rate of conference room  <strong> {{ roomName }} </strong>
-        </label>
-        <p-chart type="bar" [data]="data"></p-chart>
-
+        <div *ngIf="showChart" class="container">
+            <label style="display: block;text-align: center;">
+            A report for occupancy and vacancy rate of conference rooms of buliding <strong> {{ buldingName | uppercase }} </strong>
+            </label>
+            <p-chart type="bar" [data]="data"></p-chart>
+        </div>
     </div>

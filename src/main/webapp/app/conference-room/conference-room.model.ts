@@ -9,11 +9,12 @@ export class BuildingInfo {
 
 export class RoomInfo {
     constructor(
-        private conferenceRoomId: number,
+        public conferenceRoomId: number,
         public roomName: string,
         public roomNum: number,
         public roomCapacity: number,
-        public equipments: EquipmentInfo[]
+        public equipments: EquipmentInfo[],
+        public buildingId: number
     ){ }
 }
 

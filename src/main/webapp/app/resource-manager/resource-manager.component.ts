@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Principal } from '../shared';
 import { ResourceManagerService } from './resource-manager.service';
+import { JhiEventManager } from 'ng-jhipster';
 
 @Component({
   selector: 'jhi-resource-manager',
@@ -11,21 +12,32 @@ import { ResourceManagerService } from './resource-manager.service';
 })
 export class ResourceManagerComponent implements OnInit {
   
-  constructor( private conferenceRoomService:ResourceManagerService) { }
   selectedResource:string;
   buildingsData:any;
   conferenceRoomsData:any;
   equipmentsData:any;
-
+  
   resources = ["Building", "Conference Room", "Equipment"];
+  
+  constructor( private resourceManagerService:ResourceManagerService,
+                private eventManager: JhiEventManager) { }
+  
   ngOnInit() {
      this.selectedResource = this.resources[0];
      this.getAllBuildings();
      this.getAllConferenceRooms();
+     this.getAllEquipmentRooms();
+     this.registerChangeInResources();
+  }
+  
+  registerChangeInResources() {
+    this.eventManager.subscribe('buildingListModification', (response) => this.getAllBuildings());
+    this.eventManager.subscribe('conferenceRoomListModification', (response) => this.getAllConferenceRooms());
+    this.eventManager.subscribe('equipmentListModification', (response) => this.getAllEquipmentRooms());
   }
 
   getAllBuildings(){
-      this.conferenceRoomService.getAllBuildingData().subscribe(
+      this.resourceManagerService.getAllBuildingData().subscribe(
           (response) => {
               this.buildingsData = response;
           },
@@ -35,7 +47,7 @@ export class ResourceManagerComponent implements OnInit {
       )  
   }
   getAllConferenceRooms(){
-    this.conferenceRoomService.getAllConferenceData().subscribe(
+    this.resourceManagerService.getAllConferenceRoomData().subscribe(
         (response) => {
             this.conferenceRoomsData = response;
         },
@@ -45,7 +57,7 @@ export class ResourceManagerComponent implements OnInit {
     )  
   }
   getAllEquipmentRooms(){
-    this.conferenceRoomService.getAllEquipmentData().subscribe(
+    this.resourceManagerService.getAllEquipmentData().subscribe(
         (response) => {
             this.equipmentsData = response;
         },

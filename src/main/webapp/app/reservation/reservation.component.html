@@ -1,7 +1,7 @@
 <div class="row">
 
     <div class="col-md-1">
-        <div (click)="goBack()"><i class="fa fa-arrow-left" style="font-size:34px;color:#428bca;padding-left: 120px;"></i></i></div>
+        <div (click)="goBack()"><i class="fa fa-arrow-left" style="font-size:34px;color:#428bca;padding-left: 120px;"></i></div>
      </div>
 
      <div class="content col-md-11">
@@ -140,7 +140,7 @@
                                <br>
                                 <p style="font-weight: 100">Thank you, {{reservation_info['firstName']}} {{reservation_info['lastName']}}</p>
                                 <p style="font-weight: 100">Successfully Reserved the Conference Room({{reservation_info['conferenceRoomId']}})</p>
-                                <p style="font-weight: 100">Form {{reservation_info['roomScheduleStartTime']}} - {{reservation_info['roomScheduleEndTime']}}</p>
+                                <p style="font-weight: 100">From {{reservation_info['roomScheduleStartTime']}} - {{reservation_info['roomScheduleEndTime']}}</p>
                             </div>
                         </div>
                         <div class="col-md-3">

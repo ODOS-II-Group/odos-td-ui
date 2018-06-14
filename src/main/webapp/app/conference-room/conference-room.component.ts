@@ -7,13 +7,15 @@ import {Router, ActivatedRoute, Params, Data, RouterStateSnapshot, ActivatedRout
 import { Account, LoginModalService, Principal } from "../shared";
 import { ConferenceRoomService } from './conference-room.service';
 import {StateStorageService} from "../shared/auth/state-storage.service";
+import { MatDialog } from '@angular/material';
+import { ScheduledRoomInformationComponent } from '../scheduled-room-information/scheduled-room-information.component';
+import { ReservationService } from '../reservation/reservation.service';
+
 
 @Component({
     selector: 'jhi-conference-room',
     templateUrl: './conference-room.component.html',
-    styleUrls: [
-        'conference-room.scss'
-    ]
+    styleUrls:[ 'conference-room.scss' ]
 
 })
 export class ConferenceRoomComponent implements OnInit {
@@ -21,11 +23,13 @@ export class ConferenceRoomComponent implements OnInit {
     en: any;
     date10: Date;
     date: Date;
+    scheduledData : {};
+    confRoomId: Number;
 
     account: Account;
     modalRef: NgbModalRef;
     buildingInfo= {};
-    selectedRoom: string;
+    selectedRoom: {};
     buildingName: string;
 
     constructor(
@@ -35,7 +39,9 @@ export class ConferenceRoomComponent implements OnInit {
         private route: ActivatedRoute,
         private conferenceRoomService: ConferenceRoomService,
         private router: Router,
-        private stateStorageService: StateStorageService
+        private stateStorageService: StateStorageService,
+        private dialog : MatDialog,
+        private reservationService: ReservationService
     ) {
         this.en = {
             firstDayOfWeek: 0,
@@ -63,6 +69,7 @@ export class ConferenceRoomComponent implements OnInit {
         });
 
         this.registerAuthenticationSuccess();
+        
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
@@ -119,11 +126,31 @@ export class ConferenceRoomComponent implements OnInit {
             (response) => {
                 this.buildingInfo = response;
                 this.selectedRoom = this.buildingInfo['conferenceRooms'][0];
+                this.confRoomId = +this.selectedRoom['conferenceRoomId'];
+               
             },
             (error) => {
                 console.log(error);
             }
         )
+    }
+    getRoomReservationInfo(){
+
+        this.reservationService.getRoomReservationById(this.confRoomId).subscribe(
+            (response) => {
+                this.dialog.open(ScheduledRoomInformationComponent, {
+                    data: response                  
+                 });
+            },
+            (error) => {
+                console.log(error);
+            }
+        )
+    }
+    
+    showRoomDetails(selectedRoomId: Number){
+        this.confRoomId = selectedRoomId;
+        this.getRoomReservationInfo();
     }
 
 }

@@ -3,9 +3,10 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 import { ChartModule } from 'primeng/chart';
 import { NgbDateStruct, NgbCalendar, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
-
+import { ConferenceRoomService } from '../conference-room/conference-room.service';
 import { Account, LoginModalService, Principal } from '../shared';
 import { ReportService } from "./report.service";
+import { HomeService } from "../home/home.service";
 
 @Component({
     selector: 'jhi-report',
@@ -30,11 +31,19 @@ export class ReportComponent implements OnInit {
     }
     selectedOption: string = this.filterOptions[0];
 
+    buildings: any;
+    selectedRoom: {};
+    confRoomId: Number;
+    roomName: string;
+    buildingInfo = {};
+
     constructor(
         private principal: Principal,
         private loginModalService: LoginModalService,
         private eventManager: JhiEventManager,
-        private reportService: ReportService
+        private reportService: ReportService,
+        private conferenceRoomService: ConferenceRoomService,
+        private homeService: HomeService
     ) {
         this.data = {
             labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
@@ -53,6 +62,15 @@ export class ReportComponent implements OnInit {
                 }
             ]
         }
+
+        this.homeService.getAllBuildingData().subscribe(
+            (response) => {
+                this.buildings = response;
+            },
+            (error) => {
+                console.log(error);
+            }
+        )
     }
 
     ngOnInit() {
@@ -60,9 +78,29 @@ export class ReportComponent implements OnInit {
             this.account = account;
         });
         this.registerAuthenticationSuccess();
-        // this.searchBy('search/building/' + );
     }
 
+    getBuildigInfo(buildingNumber: Number) {
+        this.conferenceRoomService.getBuildingData(buildingNumber).subscribe(
+            (response) => {
+                this.buildingInfo = response;
+                this.selectedRoom = this.buildingInfo['conferenceRooms'][0];
+                this.confRoomId = +this.selectedRoom['conferenceRoomId'];
+            },
+            (error) => {
+                console.log(error);
+            }
+        )
+    }
+    onChangeBuilding(selectedBuilding) {
+        this.selectedRoom = selectedBuilding.conferenceRooms;
+    }
+    onChangeRoom(selectedRoomInfo) {
+        console.log(selectedRoomInfo);
+        this.confRoomId = selectedRoomInfo.conferenceRoomId;
+        this.roomName = selectedRoomInfo.roomName;
+    }
+    
     registerAuthenticationSuccess() {
         this.eventManager.subscribe('authenticationSuccess', (message) => {
             this.principal.identity().then((account) => {
@@ -79,7 +117,7 @@ export class ReportComponent implements OnInit {
         this.modalRef = this.loginModalService.open();
     }
 
-    searchBy(filterBy: string){
+    searchBy(filterBy: string) {
 
         console.log("filter by", this.filterMapping[this.selectedOption], filterBy);
         return this.reportService.getSearchResult(this.filterMapping[this.selectedOption] + filterBy).subscribe(

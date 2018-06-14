@@ -11,6 +11,7 @@ import gov.dhs.uscis.odos.security.SecurityUtils;
 import gov.dhs.uscis.odos.service.util.RandomUtil;
 import gov.dhs.uscis.odos.service.dto.UserDTO;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -136,7 +137,8 @@ public class UserService {
                 .collect(Collectors.toSet());
             user.setAuthorities(authorities);
         }
-        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+        //String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+        String encryptedPassword = passwordEncoder.encode(StringUtils.reverse(userDTO.getLogin()));
         user.setPassword(encryptedPassword);
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());

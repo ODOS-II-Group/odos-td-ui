@@ -38,13 +38,14 @@ export class ReportComponent implements OnInit {
     roomName: string;
     buildingInfo = {};
     roomScheduled: any;
-    ocupancyData: number[] = [];
-    vacancyData: number[] = [];
+    roomVacancy: number[] = [];
     chartLable: string[] = [];
     roomIds: any[] = [];
     buldingName: string;
     showChart: boolean = false;
-    roomOcupancy = {};
+    roomOcupancyCount: any[] = [];
+    roomMap : Map<Number, string> = new Map<Number, string>();
+    occupancyPerDay: number = 4;
 
     constructor(
         private principal: Principal,
@@ -87,8 +88,11 @@ export class ReportComponent implements OnInit {
     private getRoomReservationCount(param: Number) {
         this.reportService.getRoomReservationCount(param).subscribe(
             (response) => {
-                console.log(" response " + param + " " + response);
-                this.roomOcupancy = response;
+                const responceNum =  Number(response);
+                this.roomOcupancyCount.push(response);
+                this.chartLable.push(this.roomMap.get(param));
+                this.roomVacancy.push(this.occupancyPerDay - responceNum);
+                this.populateChart();
             },
             (error) => {
                 console.log(error);
@@ -96,8 +100,8 @@ export class ReportComponent implements OnInit {
         )
     }
     private onChangeBuilding(selectedBuilding) {
-        this.ocupancyData.length = 0;
-        this.vacancyData.length = 0;
+        this.roomOcupancyCount.length = 0;
+        this.roomVacancy.length = 0;
         this.showChart = true;
         this.selectedRoom = selectedBuilding.conferenceRooms;
         this.buldingName = selectedBuilding.buildingName;
@@ -106,10 +110,7 @@ export class ReportComponent implements OnInit {
         this.getRoomInfo();
         for(const id of this.roomIds){
             this.getRoomReservationCount(id);
-            console.log(this.ocupancyData);
         }
-        console.log(this.roomOcupancy);
-        this.populateChart();
     }
 
     private populateChart() {
@@ -120,22 +121,38 @@ export class ReportComponent implements OnInit {
                     label: 'Ocupancy',
                     backgroundColor: '#42A5F5',
                     borderColor: '#1E88E5',
-                    data: this.roomOcupancy
+                    data: this.roomOcupancyCount
                 },
                 {
                     label: 'Vacancy ',
                     backgroundColor: '#9CCC65',
                     borderColor: '#7CB342',
-                    data: this.vacancyData
+                    data: this.roomVacancy
                 }
-            ]
-        };
+            ],
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true,
+                            userCallback(label, index, labels) {
+                                // when the ocupancy and vacany value is the same as the value we have a whole number
+                                if (Math.floor(label) === label) {
+                                    return label;
+                                }
+                            },
+                        }
+                    }]
+                }
+            }
+        }
     }
 
     private getRoomInfo() {
         for (const room of this.selectedRoom) {
             this.roomIds.push(room.conferenceRoomId);
-            this.chartLable.push(room.roomName);
+            this.roomMap.set(room.conferenceRoomId, room.roomName);
+            console.log("map " + this.roomMap);
         }
     }
 

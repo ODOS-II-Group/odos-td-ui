@@ -19,13 +19,19 @@
                 {{ building.buildingName | uppercase }}
             </option>
         </select>
-        
+
         <br>
         <br>
         <div *ngIf="showChart" class="container">
             <label style="display: block;text-align: center;">
-            A report for occupancy and vacancy rate of conference rooms of buliding <strong> {{ buldingName | uppercase }} </strong>
+                A report for occupancy and vacancy rate of conference rooms of buliding
+                <strong> {{ buldingName | uppercase }} </strong>
             </label>
-            <p-chart type="bar" [data]="data"></p-chart>
+
+            <canvas id="canvas">{{ chart }}</canvas>
+
+            <br>
+            <br>
+            <button style="border-radius: 5px;" type="submit" class="btn btn-primary btn-sm" name="printpdf" id="printpdf" (click)=" printPdf()">Print</button>
         </div>
     </div>

@@ -8,6 +8,8 @@ import { Account, LoginModalService, Principal } from '../shared';
 import { ReportService } from "./report.service";
 import { HomeService } from "../home/home.service";
 import { ReservationService } from '../reservation/reservation.service';
+import { Chart } from 'chart.js';
+
 
 @Component({
     selector: 'jhi-report',
@@ -42,10 +44,12 @@ export class ReportComponent implements OnInit {
     chartLable: string[] = [];
     roomIds: any[] = [];
     buldingName: string;
-    showChart: boolean = false;
-    roomOcupancyCount: any[] = [];
+    roomOcupancy: any[] = [];
     roomMap : Map<Number, string> = new Map<Number, string>();
-    occupancyPerDay: number = 4;
+    maxOccupancyPerDay: number = 32;
+    chart = [];
+    showChart: boolean = false;
+
 
     constructor(
         private principal: Principal,
@@ -88,10 +92,12 @@ export class ReportComponent implements OnInit {
     private getRoomReservationCount(param: Number) {
         this.reportService.getRoomReservationCount(param).subscribe(
             (response) => {
-                const responceNum =  Number(response);
-                this.roomOcupancyCount.push(response);
+                const responceCount =  Number(response);
+                const occupancyRate =  Math.floor((responceCount / this.maxOccupancyPerDay) * 100);
+                const vacancyRate = Math.floor((this.maxOccupancyPerDay - responceCount) * 100 / this.maxOccupancyPerDay);
+                this.roomOcupancy.push(occupancyRate);
                 this.chartLable.push(this.roomMap.get(param));
-                this.roomVacancy.push(this.occupancyPerDay - responceNum);
+                this.roomVacancy.push(vacancyRate);
                 this.populateChart();
             },
             (error) => {
@@ -100,53 +106,59 @@ export class ReportComponent implements OnInit {
         )
     }
     private onChangeBuilding(selectedBuilding) {
-        this.roomOcupancyCount.length = 0;
+        this.roomOcupancy.length = 0;
         this.roomVacancy.length = 0;
-        this.showChart = true;
         this.selectedRoom = selectedBuilding.conferenceRooms;
         this.buldingName = selectedBuilding.buildingName;
         this.roomIds.length = 0;
         this.chartLable.length = 0;
+        this.showChart = true;
         this.getRoomInfo();
         for(const id of this.roomIds){
             this.getRoomReservationCount(id);
         }
     }
 
-    private populateChart() {
-        this.data = {
-            labels: this.chartLable,
-            datasets: [
-                {
-                    label: 'Ocupancy',
-                    backgroundColor: '#42A5F5',
-                    borderColor: '#1E88E5',
-                    data: this.roomOcupancyCount
+    populateChart(){
+        this.chart = new Chart('canvas', {
+            type: 'line',
+            data: {
+                labels: this.chartLable,
+                datasets: [
+                    {
+                        label: 'Ocupancy',
+                        data: this.roomOcupancy,
+                        borderColor: "#3cba9f",
+                        fill: false
+                    },
+                    {
+                        label: 'Vacancy',
+                        data: this.roomVacancy,
+                        borderColor: "#ffcc00",
+                        fill: false
                 },
-                {
-                    label: 'Vacancy ',
-                    backgroundColor: '#9CCC65',
-                    borderColor: '#7CB342',
-                    data: this.roomVacancy
-                }
-            ],
+              ]
+        },
             options: {
+                legend: {
+                    display: true
+                },
                 scales: {
+                    xAxes: [{
+                        display: true
+                    }],
                     yAxes: [{
-                        ticks: {
-                            beginAtZero:true,
-                            userCallback(label, index, labels) {
-                                // when the ocupancy and vacany value is the same as the value we have a whole number
-                                if (Math.floor(label) === label) {
-                                    return label;
-                                }
-                            },
+                        display: true,
+                         ticks: {
+                            callback: (value, index, values) => {
+                                return '%' + value;
+                            }
                         }
-                    }]
+                    }],
                 }
             }
-        }
-    }
+          });
+     }
 
     private getRoomInfo() {
         for (const room of this.selectedRoom) {
@@ -201,5 +213,8 @@ export class ReportComponent implements OnInit {
                 console.log(error);
             }
         )
+    }
+    printPdf(){
+        window.print();
     }
 }

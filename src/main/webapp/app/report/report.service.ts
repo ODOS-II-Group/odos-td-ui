@@ -24,7 +24,7 @@ export class ReportService {
                     'Authorization': 'Bearer ' + this.getToken(),
                     'Content-Type': 'application/json'
                 })
-        });
+        }).map(result => result);
     };
     getToken() {
         return this.$localStorage.retrieve('authenticationToken') || this.$sessionStorage.retrieve('authenticationToken');

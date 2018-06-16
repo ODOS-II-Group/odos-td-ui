@@ -93,8 +93,8 @@ export class ReportComponent implements OnInit {
         this.reportService.getRoomReservationCount(param).subscribe(
             (response) => {
                 const responceCount =  Number(response);
-                const occupancyRate =  Math.floor((responceCount / this.maxOccupancyPerDay) * 100);
-                const vacancyRate = Math.floor((this.maxOccupancyPerDay - responceCount) * 100 / this.maxOccupancyPerDay);
+                const occupancyRate =  (responceCount / this.maxOccupancyPerDay) * 100;
+                const vacancyRate = (this.maxOccupancyPerDay - responceCount) * (100 / this.maxOccupancyPerDay);
                 this.roomOcupancy.push(occupancyRate);
                 this.chartLable.push(this.roomMap.get(param));
                 this.roomVacancy.push(vacancyRate);

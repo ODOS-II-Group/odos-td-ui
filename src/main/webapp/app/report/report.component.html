@@ -22,7 +22,7 @@
 
         <br>
         <br>
-        <div *ngIf="showChart" class="container">
+        <div [hidden]="!chart" class="container">
             <label style="display: block;text-align: center;">
                 A report for occupancy and vacancy rate of conference rooms of buliding
                 <strong> {{ buldingName | uppercase }} </strong>

@@ -128,13 +128,15 @@ export class ReportComponent implements OnInit {
                     {
                         label: 'Ocupancy',
                         data: this.roomOcupancy,
-                        borderColor: "#3cba9f",
+                        backgroundColor: '#42A5F5',
+                        borderColor: '#1E88E5',
                         fill: false
                     },
                     {
                         label: 'Vacancy',
                         data: this.roomVacancy,
-                        borderColor: "#ffcc00",
+                        backgroundColor: '#9CCC65',
+                        borderColor: '#7CB342',
                         fill: false
                 },
               ]

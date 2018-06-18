@@ -43,7 +43,8 @@ export class ReservationComponent implements OnInit {
         'conferenceTitle': '',
         'conferenceRoomId': '' ,
         'firstName': '',
-        'lastName': ''
+        'lastName': '',
+        'conferenceDescription': ''
     };
 
     date; string;
@@ -66,7 +67,7 @@ export class ReservationComponent implements OnInit {
             lastName: new FormControl('', Validators.required),
             email: new FormControl('', [Validators.email, Validators.required]),
             conferenceTitle: new FormControl('', Validators.required),
-            conferenceDescription: new FormControl('')
+            conferenceDescription: new FormControl('', Validators.required)
         });
 
         this.reservationTimeForm = new FormGroup({
@@ -83,6 +84,7 @@ export class ReservationComponent implements OnInit {
         this.reservation_info.conferenceTitle = this.reservationDetailForm.get('conferenceTitle').value;
         this.reservation_info.firstName = this.reservationDetailForm.get('firstName').value;
         this.reservation_info.lastName = this.reservationDetailForm.get('lastName').value;
+        this.reservation_info.conferenceDescription = this.reservationDetailForm.get('conferenceDescription').value;
       
         this.isReservationDetailForm = false;
         this.isReservationTimeForm = true;

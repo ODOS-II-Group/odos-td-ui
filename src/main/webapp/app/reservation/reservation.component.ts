@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ReservationService } from './reservation.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { BuildingInfo, RoomInfo, EquipmentInfo } from '../conference-room';
 
 import { LOGIN_ALREADY_USED_TYPE, EMAIL_ALREADY_USED_TYPE } from '../shared/constants/error.constants';
 
@@ -46,6 +47,12 @@ export class ReservationComponent implements OnInit {
         'lastName': ''
     };
 
+	room_info = {
+		'buildingName' : '',
+        'roomName': '',
+        'equipmentNames': []
+    };	
+    
     date; string;
     registrationError: boolean = false;
 
@@ -78,6 +85,18 @@ export class ReservationComponent implements OnInit {
         this.registrationError = false;
     }
 
+    getConferenceRoomInfo(){
+        this.reservationService.getRoomReservationById(this.reservation_info.conferenceRoomId).subscribe(
+            (response) => {
+               this.room_Info.roomName = response.
+               this.room_Info.roomName: response                  
+            },
+            (error) => {
+                console.log(error);
+            }
+        )
+    }
+    
     saveReservationDetails() {
         this.reservation_info.requestorId = this.reservationDetailForm.get('email').value;
         this.reservation_info.conferenceTitle = this.reservationDetailForm.get('conferenceTitle').value;

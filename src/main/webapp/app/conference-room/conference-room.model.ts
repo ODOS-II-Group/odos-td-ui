@@ -14,7 +14,8 @@ export class RoomInfo {
         public roomNum: number,
         public roomCapacity: number,
         public equipments: EquipmentInfo[],
-        public buildingId: number
+        public buildingId: number,
+        public buildingName: string
     ){ }
 }
 

@@ -6,76 +6,32 @@
 
     </div>
     <hr>
-
     <br>
     <br>
+    <div class="container">
+        <label style="font-weight: 500;">
+            <strong> Buldings :</strong>
+        </label>
 
-    <div class="row">
-        <div class="col-md-8 col-xs-offset-2">
-            <div class="input-group">
-                <div class="input-group-btn search-panel">
-                    <div ngbDropdown class="d-inline-block">
-                        <select style="height: 40px;" class="selectpicker" name="filterOption" id="filterOption" [(ngModel)]="selectedOption">
-                            <option selected="selected" *ngFor="let filter of filterOptions" [ngValue]="filter">{{ filter }}</option>
-                        </select>
-                    </div>
-                </div>
-                <input type="hidden" name="search_param" value="all" id="search_param">
-                <input style="height: 40px;" type="text" class="form-control" name="x" placeholder="Search term..." #filterBy>
-                <span class="input-group-btn">
-                    <button style="height: 40px;" class="btn btn-outline-success" type="button" (click)="searchBy(filterBy.value)">
-                        <span>
-                            <i class="fa fa-search"></i>
-                        </span>
-                    </button>
-                </span>
-            </div>
+        <select class="selectpicker" name="buldingOption" id="buldingOption" [(ngModel)]="buildingData" (ngModelChange)="onChangeBuilding($event)">
+            <option [ngValue]="undefined" hidden selected> Select Bulding ... </option>
+            <option selected="selected" *ngFor="let building of buildings" [ngValue]="building">
+                {{ building.buildingName | uppercase }}
+            </option>
+        </select>
+
+        <br>
+        <br>
+        <div [hidden]="!chart" class="container">
+            <label style="display: block;text-align: center;">
+                A report for occupancy and vacancy rate of conference rooms of buliding
+                <strong> {{ buldingName | uppercase }} </strong>
+            </label>
+
+            <canvas id="canvas">{{ chart }}</canvas>
+
+            <br>
+            <br>
+            <button style="border-radius: 5px;" type="submit" class="btn btn-primary btn-sm" name="printpdf" id="printpdf" (click)=" printPdf()">Print</button>
         </div>
     </div>
-</div>
-
-<br>
-<br>
-<div class="container">
-    <ngb-tabset>
-        <ngb-tab class="card" ngbTooltip="Tabular report">
-            <ng-template ngbTabTitle>
-                <b>Tabular</b> report</ng-template>
-            <ng-template ngbTabContent>
-                <br>
-                <div class="card card-header">
-                    <p> The report below shows the last 10 reservation schedules according to the filter option applied.</p>
-
-                </div>
-                <br>
-                <table class="table table-sm table-hover table-bordered table-striped" style="height: 19px;">
-                    <thead class="" style="background-color: #c8def1">
-                        <tr>
-                            <th *ngFor="let item of reportColumn">{{item}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of filterResult">
-                            <td>{{ item.requestorId }}</td>
-                            <td>{{ item.conferenceRoomId }}</td>
-                            <td>{{ item.conferenceTitle }}</td>
-                            <td>{{ item.requestorId }}</td>
-                            <td>{{ item.roomScheduleStartTime | date }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </ng-template>
-        </ngb-tab>
-        <ngb-tab class="card" ngbTooltip="Graphical report">
-            <ng-template class="card card-header" ngbTabTitle>
-                <b>Graphical</b> report</ng-template>
-            <ng-template class="card card-body" ngbTabContent>
-                <br>
-                <p>The report below gives a histogram view of the frequency of schedules based on the filter option applied.</p>
-
-                <p-chart type="bar" [data]="data"></p-chart>
-
-            </ng-template>
-        </ngb-tab>
-    </ngb-tabset>
-</div>

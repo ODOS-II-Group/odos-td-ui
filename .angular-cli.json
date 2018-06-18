@@ -3,7 +3,6 @@
     "project": {
         "name": "odos-crrs-ui"
     },
-    "apps": [{
         "root": "src/main/webapp",
         "outDir": "build/www/app",
         "assets": [

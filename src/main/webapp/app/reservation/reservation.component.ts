@@ -50,7 +50,7 @@ export class ReservationComponent implements OnInit {
 	room_info = {
 		'buildingName' : '',
         'roomName': '',
-        'equipmentNames': []
+        'equipments': []
     };	
     
     date; string;
@@ -66,6 +66,7 @@ export class ReservationComponent implements OnInit {
 
         this.route.params.subscribe((params: Params) => {
             this.reservation_info.conferenceRoomId = params['roomName'];
+            this.getConferenceRoomInfo();
         });
 
         this.reservationDetailForm = new FormGroup({
@@ -86,10 +87,12 @@ export class ReservationComponent implements OnInit {
     }
 
     getConferenceRoomInfo(){
-        this.reservationService.getRoomReservationById(this.reservation_info.conferenceRoomId).subscribe(
+        this.reservationService.getConferenceRoomById(this.reservation_info.conferenceRoomId).subscribe(
             (response) => {
-               this.room_Info.roomName = response.
-               this.room_Info.roomName: response                  
+               var roomInfo = <RoomInfo>response;
+               this.room_info.buildingName = roomInfo.buildingName;
+               this.room_info.roomName = roomInfo.roomName;
+               this.room_info.equipments = roomInfo.equipments;
             },
             (error) => {
                 console.log(error);

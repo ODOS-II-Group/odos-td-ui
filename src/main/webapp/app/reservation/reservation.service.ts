@@ -34,7 +34,11 @@ export class ReservationService {
                 })
         });
     };
-
+    
+  	getConferenceRoomById(id){
+    	return this.http.get(CRRS_API_URL + 'api/conferenceroom/' + id);
+  	}
+  
     getToken() {
         return this.$localStorage.retrieve('authenticationToken') || this.$sessionStorage.retrieve('authenticationToken');
     }

@@ -38,6 +38,29 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="form-control-label">Password</label>
+            <input type="password" class="form-control" name="password" #passwordInput="ngModel"
+                   [(ngModel)]="user.password" required minlength="1" maxlength="60" pattern="^[_A-Za-z0-9-]*$">
+
+            <div *ngIf="passwordInput.dirty && passwordInput.invalid">
+                <small class="form-text text-danger"
+                   *ngIf="passwordInput.errors.required">
+                    This field is required.
+                </small>
+
+                <small class="form-text text-danger"
+                   *ngIf="passwordInput.errors.maxlength"
+                  >
+                    This field cannot be longer than 60 characters.
+                </small>
+
+                <small class="form-text text-danger"
+                   *ngIf="passwordInput.errors.pattern">
+                    This field can only contain letters, digits, underscores and hyphens.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="form-control-label">First Name</label>
             <input type="text" class="form-control" name="firstName" #firstNameInput="ngModel"
                    [(ngModel)]="user.firstName" maxlength="50">

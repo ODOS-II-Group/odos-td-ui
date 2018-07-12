@@ -3,7 +3,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ReservationService } from './reservation.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { BuildingInfo, RoomInfo, EquipmentInfo } from '../conference-room';
 
 import { LOGIN_ALREADY_USED_TYPE, EMAIL_ALREADY_USED_TYPE } from '../shared/constants/error.constants';
 import {start} from "repl";
@@ -54,6 +55,12 @@ export class ReservationComponent implements OnInit {
         'conferenceDescription': ''
     };
 
+	room_info = {
+		'buildingName' : '',
+        'roomName': '',
+        'equipments': []
+    };	
+    
     date; string;
     registrationError: boolean = false;
 
@@ -68,6 +75,7 @@ export class ReservationComponent implements OnInit {
 
         this.route.params.subscribe((params: Params) => {
             this.reservation_info.conferenceRoomId = params['roomName'];
+            this.getConferenceRoomInfo();
         });
 
         this.reservationDetailForm = new FormGroup({
@@ -92,6 +100,20 @@ export class ReservationComponent implements OnInit {
 
     }
 
+    getConferenceRoomInfo(){
+        this.reservationService.getConferenceRoomById(this.reservation_info.conferenceRoomId).subscribe(
+            (response) => {
+               var roomInfo = <RoomInfo>response;
+               this.room_info.buildingName = roomInfo.buildingName;
+               this.room_info.roomName = roomInfo.roomName;
+               this.room_info.equipments = roomInfo.equipments;
+            },
+            (error) => {
+                console.log(error);
+            }
+        )
+    }
+    
     saveReservationDetails() {
         this.reservation_info.requestorId = this.reservationDetailForm.get('email').value;
         this.reservation_info.conferenceTitle = this.reservationDetailForm.get('conferenceTitle').value;

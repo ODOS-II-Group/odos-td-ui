@@ -33,10 +33,36 @@
              <strong> {{error}} </strong>
          </div>
          <br>
+         <div class="col-lg-7">
+            <dl class="item-property">
+                <dt style="font-weight: 500;">
+                    <span>Building</span>
+                </dt>
+                <dd><div class="bg"><span>{{ room_info.buildingName }}</span></div></dd>
+            </dl>
+            <dl class="item-property">
+                <dt style="font-weight: 500;">
+                    <span>Conference Room</span>
+                </dt>
+                <dd><div class="bg"><span>{{ room_info.roomName }}</span></div></dd>
+            </dl>
+            <dl class="param param-feature">
+                <dt style="font-weight: 500;">Equipments Provided</dt>
+                <dd>
+                    <div class="bg">
+                        <div class="chiller_cb" *ngFor="let equip of room_info.equipments">
+                            <label>{{ equip.equipmentName }}</label> -
+                            <span>{{ equip.equipmentDesc }}</span>
+                        </div>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        <br>
         <div class="breadcrumb breadcrumb-option">
             <div class="navigation">
                 <div class="nav-variant-breadcrumb">
-                    <h2 class="font-weight-bold text-center h1">Make a Reservation</h2>
+                    <h4 class="font-weight-bold text-center">Make a Reservation</h4>
                 </div>
             </div>
         </div>

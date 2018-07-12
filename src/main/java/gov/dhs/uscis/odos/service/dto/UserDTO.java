@@ -25,6 +25,9 @@ public class UserDTO {
     @Size(min = 1, max = 50)
     private String login;
 
+    @Size(max = 60)
+    private String password;
+    
     @Size(max = 50)
     private String firstName;
 
@@ -60,6 +63,7 @@ public class UserDTO {
     public UserDTO(User user) {
         this.id = user.getId();
         this.login = user.getLogin();
+        this.password = user.getPassword();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
@@ -89,6 +93,14 @@ public class UserDTO {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {

@@ -137,6 +137,8 @@ public class UserService {
                 .collect(Collectors.toSet());
             user.setAuthorities(authorities);
         }
+        //String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+//         String encryptedPassword = passwordEncoder.encode(StringUtils.reverse(userDTO.getLogin()));
         String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
         user.setPassword(encryptedPassword);
         user.setResetKey(RandomUtil.generateResetKey());

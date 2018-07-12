@@ -3,9 +3,11 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ReservationService } from './reservation.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { BuildingInfo, RoomInfo, EquipmentInfo } from '../conference-room';
 
 import { LOGIN_ALREADY_USED_TYPE, EMAIL_ALREADY_USED_TYPE } from '../shared/constants/error.constants';
+import {start} from "repl";
 
 @Component({
     selector: 'jhi-reservation',
@@ -22,7 +24,7 @@ export class ReservationComponent implements OnInit {
     conferenceTitle: FormControl;
     conferenceDescription: FormControl;
 
-   
+
     success: boolean;
     error: string;
     errorEmailExists: string;
@@ -30,7 +32,10 @@ export class ReservationComponent implements OnInit {
 
     reservationTimeForm: FormGroup;
     startDate: FormControl;
-    startTime: FormControl;
+    startTimeHr: FormControl;
+    startTimeMin: FormControl;
+    endTimeHr: FormControl;
+    endTimeMin: FormControl;
     endTime: FormControl;
 
     isReservationDetailForm: boolean = true;
@@ -39,8 +44,10 @@ export class ReservationComponent implements OnInit {
 
     reservation_info = {
         'requestorId': '',
-        'roomScheduleStartTime': '',
-        'roomScheduleEndTime': '',
+        'roomScheduleStartTimeHr': '',
+        'roomScheduleStartTimeMin': '',
+        'roomScheduleEndTimeHr': '',
+        'roomScheduleEndTimeMin': '',
         'conferenceTitle': '',
         'conferenceRoomId': '' ,
         'firstName': '',
@@ -61,6 +68,7 @@ export class ReservationComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private reservationService: ReservationService,
+        private modalService: NgbModal
     ) { }
 
     ngOnInit() {
@@ -80,11 +88,16 @@ export class ReservationComponent implements OnInit {
 
         this.reservationTimeForm = new FormGroup({
             startDate: new FormControl('', Validators.required),
-            startTime: new FormControl('', Validators.required),
-            endTime: new FormControl('', Validators.required)
+            startTimeHr: new FormControl('', Validators.required),
+            startTimeMin: new FormControl('', Validators.required),
+            endTimeHr: new FormControl('', Validators.required),
+            endTimeMin: new FormControl('', Validators.required)
         });
 
         this.registrationError = false;
+
+        this.isReservationCompleteForm = false;
+
     }
 
     getConferenceRoomInfo(){
@@ -107,30 +120,39 @@ export class ReservationComponent implements OnInit {
         this.reservation_info.firstName = this.reservationDetailForm.get('firstName').value;
         this.reservation_info.lastName = this.reservationDetailForm.get('lastName').value;
         this.reservation_info.conferenceDescription = this.reservationDetailForm.get('conferenceDescription').value;
-      
         this.isReservationDetailForm = false;
         this.isReservationTimeForm = true;
     }
 
     saveReservationTime(){
-      let startHour = parseInt(this.reservationTimeForm.get('startTime').value.split(":")[0]);
-      let startMinute = parseInt(this.reservationTimeForm.get('startTime').value.split(":")[1]);
-      let endHour = parseInt(this.reservationTimeForm.get('endTime').value.split(":")[0]);
-      let endMinute = parseInt(this.reservationTimeForm.get('endTime').value.split(":")[1]);
-      
+      let startHour = parseInt(this.reservationTimeForm.get('startTimeHr').value);
+      let startMinute = parseInt(this.reservationTimeForm.get('startTimeMin').value);
+      let endHour = parseInt(this.reservationTimeForm.get('endTimeHr').value);
+      let endMinute = parseInt(this.reservationTimeForm.get('endTimeMin').value);
+
       let diff = (endHour - startHour) * 60 + (endMinute - startMinute);
-    
+
       if (diff > 180) {
-      	this.error = 'Reservation time cannot exceed 3 hours';
-      	console.log(this.error);
-	    this.isReservationCompleteForm = false;
-	    this.registrationError = true;
+            this.error = 'Reservation time cannot exceed 3 hours';
+            console.log(this.error);
+            this.isReservationCompleteForm = false;
+            this.registrationError = true;
+      } else if (!this.scheduleConflict(this.reservation_info.conferenceRoomId)){
+            document.getElementById("modalOpener").click();
+            this.error = 'Time Conflict with your current reservation';
+            console.log(this.error);
+            this.isReservationCompleteForm = false;
+            this.registrationError = true;
+
+
       } else {
 	      this.date = this.reservationTimeForm.get('startDate').value;
-	
-	      this.reservation_info.roomScheduleStartTime = this.date + " " + this.reservationTimeForm.get('startTime').value;
-	      this.reservation_info.roomScheduleEndTime = this.date + " " +  this.reservationTimeForm.get('endTime').value;
-	      this.reservationService.postReservationData(this.reservation_info)
+
+            this.reservation_info.roomScheduleStartTimeHr = this.date + " " + this.reservationTimeForm.get('startTimeHr').value;
+            this.reservation_info.roomScheduleStartTimeMin = this.date + " " + this.reservationTimeForm.get('startTimeMin').value;
+            this.reservation_info.roomScheduleEndTimeHr = this.date + " " +  this.reservationTimeForm.get('endTimeHr').value;
+            this.reservation_info.roomScheduleEndTimeMin = this.date + " " +  this.reservationTimeForm.get('endTimeMin').value;
+            this.reservationService.postReservationData(this.reservation_info)
 	      .subscribe((response)=>{
 	          this.isReservationCompleteForm = true;
 	          this.isReservationTimeForm = false;
@@ -160,8 +182,47 @@ export class ReservationComponent implements OnInit {
             this.error = 'ERROR';
         }
     }
+
     goBack() {
         window.history.back();
+    }
+
+    private scheduleConflict(conferenceRoomId) {
+        console.log("reservation completed? ", this.isReservationCompleteForm);
+        this.reservationService.getRoomReservationById(conferenceRoomId)
+            .subscribe(
+                (response) => {
+
+                    let startTime = this.date + "T" + this.reservationTimeForm.get("startTime").value;
+                    let endTime = this.date + "T" + this.reservationTimeForm.get("endTime").value;
+
+                    return this.checkConflict(response, startTime, endTime);
+                },
+            (error) =>{
+                    console.log(error);
+            }
+        )}
+
+        private checkConflict(allSchedules, currentStartTime, currentEndTime){
+            for (let sch of allSchedules){
+                let reservationStartTime = sch["roomScheduleStartTime"];
+                let reservationEndTime = sch["roomScheduleEndTime"];
+
+                if ((reservationStartTime <= currentStartTime) && (reservationEndTime > currentStartTime)){
+                    // this.isReservationCompleteForm = false;
+                    return true;
+                }
+                if ((reservationStartTime < currentEndTime) && (reservationEndTime >= currentEndTime)){
+                    // this.isReservationCompleteForm = false;
+                    return true;
+                }
+            }
+            // this.isReservationCompleteForm = true;
+            return false
+        }
+
+    openVerticallyCentered(content) {
+        this.modalService.open(content);
     }
 
 }

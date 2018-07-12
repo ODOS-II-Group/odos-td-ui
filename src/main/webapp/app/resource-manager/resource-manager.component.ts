@@ -32,6 +32,7 @@ export class ResourceManagerComponent implements OnInit {
   
   registerChangeInResources() {
     this.eventManager.subscribe('buildingListModification', (response) => this.getAllBuildings());
+    this.eventManager.subscribe('conferenceRoomListModification', (response) => this.getAllConferenceRooms());
     this.eventManager.subscribe('conferenceRoomListModification', (response) => this.getAllBuildings());
     this.eventManager.subscribe('equipmentListModification', (response) => this.getAllEquipmentRooms());
   }

@@ -1,10 +1,34 @@
 <div class="row">
 
     <div class="col-md-1">
-        <div (click)="goBack()"><i class="fa fa-arrow-left" style="font-size:34px;color:#428bca;padding-left: 120px;"></i></div>
-     </div>
+        <div (click)="goBack()">
+            <i class="fa fa-arrow-left" style="font-size:34px;color:#428bca;padding-left: 120px;"></i>
+        </div>
+    </div>
 
-     <div class="content col-md-11">
+    <div class="content col-md-11">
+
+        <!--Modal Button-->
+        <button [hidden]="true" id="modalOpener" class="btn btn-outline-primary mb-2 mr-2" (click)="openVerticallyCentered(content)">Modal vertically centered</button>
+
+        <!--Modal-->
+        <ng-template #content let-c="close" let-d="dismiss">
+            <div class="modal-header">
+                <h4 class="modal-title">Conference Time Conflict</h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Please choose different times. &hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" (click)="c('Close click')">Close</button>
+            </div>
+        </ng-template>
+
+
+
          <div class="col-lg-12 col-sm-12 col-xs-12 alert alert-danger" *ngIf="registrationError">
              <strong> {{error}} </strong>
          </div>
@@ -116,14 +140,44 @@
                                             <input type="date" class="with-status-border form-control" maxlength="80" name="startDate" id="startDate" formControlName="startDate">
                                         </div>
                                         <br>
-                                        <div class="row">
-                                            <div class="form-group planyo-form-item-group  col-md-4" id="row_startTime">
+                                        <div class="row" style="padding-left: 15px">
+                                            <div class="form-group planyo-form-item-group col-md-4" id="row_startTime" >
                                                 <label for="startTime" class="control-label">Start Time<em>*</em></label>
-                                                <input type="time" class="with-status-border form-control" maxlength="80" name="startTime" id="startTime" formControlName="startTime">
+                                                <select name="startTime" id="startTime1" formControlName="startTimeHr">
+                                                    <option value="9">9</option>
+                                                    <option value="10">10</option>
+                                                    <option value="11">11</option>
+                                                    <option value="12">12</option>
+                                                    <option value="13">13</option>
+                                                    <option value="14">14</option>
+                                                    <option value="15">15</option>
+                                                    <option value="16">16</option>
+                                                    <option value="17">17</option>
+                                                </select> : <select name="startTime2" id="startTime2" formControlName="startTimeMin">
+                                                <option value="00">00</option>
+                                                <option value="15">15</option>
+                                                <option value="30">30</option>
+                                                <option value="45">45</option>
+                                            </select>
                                             </div>
-                                            <div class="form-group planyo-form-item-group  col-md-4" id="row_endTime">
+                                            <div class="form-group planyo-form-item-group col-md-4" id="row_endTime">
                                                 <label for="endTime" class="control-label">End Time<em>*</em></label>
-                                                <input type="time" class="with-status-border form-control" maxlength="80" name="endTime" id="endTime" formControlName="endTime">
+                                                <select name="endTime1" id="endTime" formControlName="endTimeHr">
+                                                    <option value="9">9</option>
+                                                    <option value="10" selected="selected">10</option>
+                                                    <option value="11">11</option>
+                                                    <option value="12">12</option>
+                                                    <option value="13">13</option>
+                                                    <option value="14">14</option>
+                                                    <option value="15">15</option>
+                                                    <option value="16">16</option>
+                                                    <option value="17">17</option>
+                                                </select> : <select name="endTime2" id="endTime2" formControlName="endTimeMin">
+                                                <option value="00">00</option>
+                                                <option value="15">15</option>
+                                                <option value="30">30</option>
+                                                <option value="45">45</option>
+                                            </select>
                                             </div>
                                         </div>
                                     </div>
@@ -150,5 +204,7 @@
                 </div>
         </div>
     </div>
+
+
 </div>
 

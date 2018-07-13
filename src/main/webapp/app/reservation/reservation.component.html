@@ -166,6 +166,62 @@
                                             <input type="date" class="with-status-border form-control" maxlength="80" name="startDate" id="startDate" formControlName="startDate">
                                         </div>
                                         <br>
+                                        <label style="padding-left: 15px;" for="timeAvailable" class="control-label">Available Hours</label>
+                                        <div class="timeAvailablityTable">
+                                            <table cellspacing="1" cellpadding="0">
+                                                <tbody>
+                                                    <!--<tr>-->
+                                                        <!--<th>-->
+                                                            <!--<h3>Available Hours</h3>-->
+                                                        <!--</th>-->
+                                                    <!--</tr>-->
+                                                    <tr>
+                                                        <td valign="top">
+                                                            <table>
+                                                                <tbody>
+                                                                    <tr style="height: 20px">
+                                                                        <td> </td>
+                                                                        <td> </td>
+                                                                    </tr>
+                                                                    <tr *ngFor="let time of [9,10,11,12,13,14,15,16,17]">
+                                                                        <td style="height: 20px;">
+                                                                            <div class="timeRows" style=" text-align: center">{{ time }}</div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                        <td valign="top">
+                                                            <div style="width: 300px; overflow: auto; overflow-y: hidden">
+                                                                <table  style="width: 700px; max-width: 700px" cellspacing="1" cellpadding="0">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div style="font-size: 12px; color: #4e4e4e;">
+                                                                                    <div style="width: 60px; float:left; text-align: center">00</div>
+                                                                                    <div style="width: 60px; float:left; text-align: center">15</div>
+                                                                                    <div style="width: 60px; float:left; text-align: center">30</div>
+                                                                                    <div style="width: 60px; float:left; text-align: center">45</div>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr *ngFor="let x of [1,2,3,4,5,6,7,8, 9]" style="border-spacing: 1px; border-collapse: separate">
+                                                                            <td>
+                                                                                <div class="rmAvailable" style="width: 60px; float: left;"></div>
+                                                                                <div class="rmAvailable" style="width: 60px; float: left;"></div>
+                                                                                <div class="rmAvailable" style="width: 60px; float: left;"></div>
+                                                                                <div class="rmAvailable" style="width: 60px; float: left;"></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <br>
                                         <div class="row" style="padding-left: 15px">
                                             <div class="form-group planyo-form-item-group col-md-4" id="row_startTime" >
                                                 <label for="startTime" class="control-label">Start Time<em>*</em></label>

@@ -66,7 +66,7 @@ pipeline {
             steps {
               script{
                 Common.slack 'Twistlock Scan...'
-                Common.twistlock('localhost:5000', "${CONTAINER_NAME}",'latest')
+                Common.twistlock("${DOCKER_REGISTRY}", "${CONTAINER_NAME}",'latest')
               }
             }
         }

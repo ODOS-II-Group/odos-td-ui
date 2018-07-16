@@ -28,8 +28,8 @@ export class ConferenceRoomComponent implements OnInit {
 
     account: Account;
     modalRef: NgbModalRef;
-    buildingInfo= {};
-    selectedRoom: {};
+    buildingInfo= <any>{};
+    selectedRoom= <any>{};
     buildingName: string;
 
     constructor(
@@ -54,8 +54,6 @@ export class ConferenceRoomComponent implements OnInit {
             clear: 'Clear'
         }
     }
-
-
 
     ngOnInit() {
         this.route.params.subscribe((params: Params) => this.getBuildigInfo(params['id']));

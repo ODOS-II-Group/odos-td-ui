@@ -49,6 +49,7 @@ export class ReportComponent implements OnInit {
     maxOccupancyPerDay: number = 32;
     chart = [];
     showChart: boolean = false;
+    buildingData: any;
 
 
     constructor(
@@ -105,7 +106,7 @@ export class ReportComponent implements OnInit {
             }
         )
     }
-    private onChangeBuilding(selectedBuilding) {
+    onChangeBuilding(selectedBuilding) {
         this.roomOcupancy.length = 0;
         this.roomVacancy.length = 0;
         this.selectedRoom = selectedBuilding.conferenceRooms;

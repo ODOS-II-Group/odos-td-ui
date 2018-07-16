@@ -42,7 +42,7 @@
         "no-switch-case-fall-through": true,
         "no-var-keyword": true,
         "object-literal-sort-keys": false,
-        "radix": true,
+        "radix": false,
         "triple-equals": [
             true,
             "allow-null-check"

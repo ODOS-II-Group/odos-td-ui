@@ -103,7 +103,7 @@ export class ReservationComponent implements OnInit {
     getConferenceRoomInfo(){
         this.reservationService.getConferenceRoomById(this.reservation_info.conferenceRoomId).subscribe(
             (response) => {
-               var roomInfo = <RoomInfo>response;
+               const roomInfo = <RoomInfo>response;
                this.room_info.buildingName = roomInfo.buildingName;
                this.room_info.roomName = roomInfo.roomName;
                this.room_info.equipments = roomInfo.equipments;
@@ -125,12 +125,12 @@ export class ReservationComponent implements OnInit {
     }
 
     saveReservationTime(){
-      let startHour = parseInt(this.reservationTimeForm.get('startTimeHr').value);
-      let startMinute = parseInt(this.reservationTimeForm.get('startTimeMin').value);
-      let endHour = parseInt(this.reservationTimeForm.get('endTimeHr').value);
-      let endMinute = parseInt(this.reservationTimeForm.get('endTimeMin').value);
+      const startHour = parseInt(this.reservationTimeForm.get('startTimeHr').value);
+      const startMinute = parseInt(this.reservationTimeForm.get('startTimeMin').value);
+      const endHour = parseInt(this.reservationTimeForm.get('endTimeHr').value);
+      const endMinute = parseInt(this.reservationTimeForm.get('endTimeMin').value);
 
-      let diff = (endHour - startHour) * 60 + (endMinute - startMinute);
+      const diff = (endHour - startHour) * 60 + (endMinute - startMinute);
 
       if (diff > 180) {
             this.error = 'Reservation time cannot exceed 3 hours';
@@ -193,8 +193,8 @@ export class ReservationComponent implements OnInit {
             .subscribe(
                 (response) => {
 
-                    let startTime = this.date + "T" + this.reservationTimeForm.get("startTime").value;
-                    let endTime = this.date + "T" + this.reservationTimeForm.get("endTime").value;
+                    const startTime = this.date + "T" + this.reservationTimeForm.get("startTime").value;
+                    const endTime = this.date + "T" + this.reservationTimeForm.get("endTime").value;
 
                     return this.checkConflict(response, startTime, endTime);
                 },
@@ -204,9 +204,9 @@ export class ReservationComponent implements OnInit {
         )}
 
         private checkConflict(allSchedules, currentStartTime, currentEndTime){
-            for (let sch of allSchedules){
-                let reservationStartTime = sch["roomScheduleStartTime"];
-                let reservationEndTime = sch["roomScheduleEndTime"];
+            for (const sch of allSchedules){
+                const reservationStartTime = sch["roomScheduleStartTime"];
+                const reservationEndTime = sch["roomScheduleEndTime"];
 
                 if ((reservationStartTime <= currentStartTime) && (reservationEndTime > currentStartTime)){
                     // this.isReservationCompleteForm = false;

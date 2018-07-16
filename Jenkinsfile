@@ -82,7 +82,7 @@ pipeline {
             steps {
               script{
                 Common.slack 'Deploying to Test Environment...'
-                Common.deployToOpenShift('odos-ii-test',"${CONTAINER_NAME}",'latest')
+                // Common.deployToOpenShift('odos-ii-test',"${CONTAINER_NAME}",'latest')
               }
             }
         }

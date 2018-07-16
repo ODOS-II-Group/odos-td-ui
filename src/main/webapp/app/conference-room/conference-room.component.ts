@@ -53,9 +53,6 @@ export class ConferenceRoomComponent implements OnInit {
             today: 'Today',
             clear: 'Clear'
         }
-
-
-
     }
 
 
@@ -69,7 +66,7 @@ export class ConferenceRoomComponent implements OnInit {
         });
 
         this.registerAuthenticationSuccess();
-        
+
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
@@ -127,7 +124,7 @@ export class ConferenceRoomComponent implements OnInit {
                 this.buildingInfo = response;
                 this.selectedRoom = this.buildingInfo['conferenceRooms'][0];
                 this.confRoomId = +this.selectedRoom['conferenceRoomId'];
-               
+
             },
             (error) => {
                 console.log(error);
@@ -139,7 +136,7 @@ export class ConferenceRoomComponent implements OnInit {
         this.reservationService.getRoomReservationById(this.confRoomId).subscribe(
             (response) => {
                 this.dialog.open(ScheduledRoomInformationComponent, {
-                    data: response                  
+                    data: response
                  });
             },
             (error) => {
@@ -147,7 +144,7 @@ export class ConferenceRoomComponent implements OnInit {
             }
         )
     }
-    
+
     showRoomDetails(selectedRoomId: Number){
         this.confRoomId = selectedRoomId;
         this.getRoomReservationInfo();

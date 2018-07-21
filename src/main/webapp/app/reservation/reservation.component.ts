@@ -38,6 +38,7 @@ export class ReservationComponent implements OnInit {
     endTimeHr: FormControl;
     endTimeMin: FormControl;
     endTime: FormControl;
+    numberOfPeople: FormControl;
 
     isReservationDetailForm: boolean = true;
     isReservationTimeForm: boolean = false;
@@ -71,7 +72,8 @@ export class ReservationComponent implements OnInit {
         private reservationService: ReservationService,
         private modalService: NgbModal
     ) { }
-
+    numberOfpeopleSelect =[5,10,15,20,25,30,35,40,45,50];
+    
     ngOnInit() {
 
         this.route.params.subscribe((params: Params) => {
@@ -92,7 +94,8 @@ export class ReservationComponent implements OnInit {
             startTimeHr: new FormControl('', Validators.required),
             startTimeMin: new FormControl('', Validators.required),
             endTimeHr: new FormControl('', Validators.required),
-            endTimeMin: new FormControl('', Validators.required)
+            endTimeMin: new FormControl('', Validators.required),
+            numberOfPeople: new FormControl('', Validators.required)
         });
 
         this.registrationError = false;
@@ -141,6 +144,7 @@ export class ReservationComponent implements OnInit {
       const startMinute = parseInt(this.reservationTimeForm.get('startTimeMin').value);
       const endHour = parseInt(this.reservationTimeForm.get('endTimeHr').value);
       const endMinute = parseInt(this.reservationTimeForm.get('endTimeMin').value);
+      const numberOfPeople = parseInt(this.reservationTimeForm.get('numberOfPeople').value);
 
       const diff = (endHour - startHour) * 60 + (endMinute - startMinute);
 

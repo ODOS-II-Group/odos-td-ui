@@ -204,9 +204,9 @@
                                                                         <tr *ngFor="let row of [1,2,3,4,5,6,7,8,9]" style="border-spacing: 1px; border-collapse: separate">
                                                                             <td>
                                                                                 <div class="rmAvailable" ></div>
-                                                                                <div class="rmAvailable" [ngStyle]="isRoomAvailable(row*2)"></div>
-                                                                                <div class="rmAvailable" [ngStyle]="isRoomAvailable(row*3)"></div>
-                                                                                <div class="rmAvailable" [ngStyle]="isRoomAvailable(row*4)"></div>
+                                                                                <div class="rmAvailable" ></div>
+                                                                                <div class="rmAvailable" ></div>
+                                                                                <div class="rmAvailable" ></div>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -258,6 +258,14 @@
                                             </select>
                                             </div>
                                         </div>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="numberOfPeople">
+                                        <label for="numberOfPeople">Number of People<em>*</em></label>
+                                        <select [value]="numberOfpeopleSelect[0]" formControlName ="numberOfPeople">
+                                            <option *ngFor="let numSelect of numberOfpeopleSelect" [value]="numSelect">{{numSelect}}</option>
+                                        </select>
                                     </div>
                                     <br>
                                     <br>

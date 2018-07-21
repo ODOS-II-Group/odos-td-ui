@@ -43,6 +43,8 @@ export class ReservationComponent implements OnInit {
     isReservationDetailForm: boolean = true;
     isReservationTimeForm: boolean = false;
     isReservationCompleteForm: boolean = false;
+    conferenceRoomId: number;
+    roomScheduleStartTime: string;
 
     reservation_info = {
         'requestorId': '',
@@ -62,6 +64,7 @@ export class ReservationComponent implements OnInit {
         'roomName': '',
         'equipments': []
     };
+   
 
     date; string;
     registrationError: boolean = false;
@@ -73,7 +76,7 @@ export class ReservationComponent implements OnInit {
         private modalService: NgbModal
     ) { }
     numberOfpeopleSelect =[5,10,15,20,25,30,35,40,45,50];
-    
+
     ngOnInit() {
 
         this.route.params.subscribe((params: Params) => {
@@ -103,7 +106,21 @@ export class ReservationComponent implements OnInit {
         this.isReservationCompleteForm = false;
 
     }
-
+    isRoomAvailable(){
+        console.log("date event ++ ", this.startDate);
+          let requestBody={
+            "conferenceRoomId": this.reservation_info.conferenceRoomId,
+            "roomScheduleStartTime": this.reservationTimeForm.controls.startDate.value + " " + this.reservationTimeForm.controls.startTimeHr.value + ":" + this.reservationTimeForm.controls.startTimeMin.value
+        }
+        this.reservationService.checkRoomAvailablity(requestBody).subscribe(
+            (response) => {
+                this.reservedTimeSlots = response
+            },
+            (error) => {
+                console.log(error);
+            }
+        )
+    }
     getResrvedSlotsByDate(date: string, conferenceRoomId: string){
         this.reservationService.getResrvedSlotsByDate(date, conferenceRoomId).subscribe(
             (response) => {
@@ -199,14 +216,14 @@ export class ReservationComponent implements OnInit {
         }
     }
 
-    isRoomAvailable(room: number){
-        if (room in this.reservedTimeSlots){
-            return 'red';
-            // return {'background-color': 'red'}
-        }
-        return 'blue';
-        // return { 'background-color': '#3a6e96'}
-    }
+    // isRoomAvailable(room: number){
+    //     if (room in this.reservedTimeSlots){
+    //         return 'red';
+    //         // return {'background-color': 'red'}
+    //     }
+    //     return 'blue';
+    //     // return { 'background-color': '#3a6e96'}
+    // }
 
     goBack() {
         window.history.back();

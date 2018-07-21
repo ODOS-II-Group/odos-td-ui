@@ -51,5 +51,15 @@ export class ReservationService {
                 })
         });
     };
+    checkRoomAvailablity(data: {}) {
+        console.log("data data ", data);
+        return this.http.post(CRRS_API_URL + 'api/conference-room-schedule/isAvailable', data, {
+            headers: new HttpHeaders(
+                {
+                    'Authorization': 'Bearer ' + this.getToken(),
+                    'Content-Type': 'application/json'
+                })
+        });
+    }
  
 }

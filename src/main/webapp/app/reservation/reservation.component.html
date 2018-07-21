@@ -164,7 +164,7 @@
                                     <div class="personal_details">
                                         <div class="form-group planyo-form-item-group  col-md-8" id="row_startdate">
                                             <label for="startDate" class="control-label">Date<em>*</em></label>
-                                            <input type="date" class="with-status-border form-control" maxlength="80" name="startDate" id="startDate" formControlName="startDate">
+                                            <input type="date" class="with-status-border form-control" maxlength="80" name="startDate" id="startDate" formControlName="startDate" >
                                         </div>
                                         <br>
                                         <label style="padding-left: 15px;"  class="control-label">Available Hours</label>
@@ -272,7 +272,7 @@
                                     <div class="form-button">
                                         <label for="submit_form_1">&nbsp;</label>
                                         <button [disabled]="!reservationTimeForm.valid" style="border-radius: 5px;" type="submit" class="btn btn-primary btn-sm" name="submit_form_!" id="submit_form_!"
-                                                (click)="saveReservationTime()">Make Reservation</button>
+                                                (click)="isRoomAvailable()">Make Reservation</button>
                                     </div>
                                 </form>
                             </div>

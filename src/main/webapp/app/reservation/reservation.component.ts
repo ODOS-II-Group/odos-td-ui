@@ -29,6 +29,7 @@ export class ReservationComponent implements OnInit {
     error: string;
     errorEmailExists: string;
     errorUserExists: string;
+    reservedTimeSlots: any;
 
     reservationTimeForm: FormGroup;
     startDate: FormControl;
@@ -59,8 +60,8 @@ export class ReservationComponent implements OnInit {
 		'buildingName' : '',
         'roomName': '',
         'equipments': []
-    };	
-    
+    };
+
     date; string;
     registrationError: boolean = false;
 
@@ -100,6 +101,17 @@ export class ReservationComponent implements OnInit {
 
     }
 
+    getResrvedSlotsByDate(date: string, conferenceRoomId: string){
+        this.reservationService.getResrvedSlotsByDate(date, conferenceRoomId).subscribe(
+            (response) => {
+                this.reservedTimeSlots = response
+            },
+            (error) => {
+                console.log(error);
+            }
+        )
+    }
+
     getConferenceRoomInfo(){
         this.reservationService.getConferenceRoomById(this.reservation_info.conferenceRoomId).subscribe(
             (response) => {
@@ -113,7 +125,7 @@ export class ReservationComponent implements OnInit {
             }
         )
     }
-    
+
     saveReservationDetails() {
         this.reservation_info.requestorId = this.reservationDetailForm.get('email').value;
         this.reservation_info.conferenceTitle = this.reservationDetailForm.get('conferenceTitle').value;
@@ -183,6 +195,15 @@ export class ReservationComponent implements OnInit {
         }
     }
 
+    isRoomAvailable(room: number){
+        if (room in this.reservedTimeSlots){
+            return 'red';
+            // return {'background-color': 'red'}
+        }
+        return 'blue';
+        // return { 'background-color': '#3a6e96'}
+    }
+
     goBack() {
         window.history.back();
     }
@@ -202,6 +223,7 @@ export class ReservationComponent implements OnInit {
                     console.log(error);
             }
         )}
+
 
         private checkConflict(allSchedules, currentStartTime, currentEndTime){
             for (const sch of allSchedules){

@@ -25,6 +25,10 @@ export class ReservationService {
             });
     };
 
+    getResrvedSlotsByDate(date: string, conferenceRoomId: string){
+        return this.http.get(CRRS_API_URL + "api/conference-room-schedule-slot/" + conferenceRoomId);
+    }
+
     getRoomReservationById(param: Number) : Observable<ConferenceRoomSchedule[]> {
         return this.http.get<ConferenceRoomSchedule[]>(CRRS_API_URL + 'api/conference-room-schedule-info/' + param, {
             headers: new HttpHeaders(
@@ -34,11 +38,11 @@ export class ReservationService {
                 })
         });
     };
-    
+
   	getConferenceRoomById(id){
     	return this.http.get(CRRS_API_URL + 'api/conferenceroom/' + id);
   	}
-  
+
     getToken() {
         return this.$localStorage.retrieve('authenticationToken') || this.$sessionStorage.retrieve('authenticationToken');
     }

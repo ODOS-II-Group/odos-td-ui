@@ -8,24 +8,24 @@
 
     <div class="content col-md-11">
 
-        <!--Modal Button-->
-        <button [hidden]="true" id="modalOpener" class="btn btn-outline-primary mb-2 mr-2" (click)="openVerticallyCentered(content)">Modal vertically centered</button>
+        <!--&lt;!&ndash;Modal Button&ndash;&gt;-->
+        <!--<button [hidden]="true" id="modalOpener" class="btn btn-outline-primary mb-2 mr-2" (click)="openVerticallyCentered(content)">Modal vertically centered</button>-->
 
-        <!--Modal-->
-        <ng-template #content let-c="close" let-d="dismiss">
-            <div class="modal-header">
-                <h4 class="modal-title">Conference Time Conflict</h4>
-                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Please choose different times. &hellip;</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" (click)="c('Close click')">Close</button>
-            </div>
-        </ng-template>
+        <!--&lt;!&ndash;Modal&ndash;&gt;-->
+        <!--<ng-template #content let-c="close" let-d="dismiss">-->
+            <!--<div class="modal-header">-->
+                <!--<h4 class="modal-title">Conference Time Conflict</h4>-->
+                <!--<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">-->
+                    <!--<span aria-hidden="true">&times;</span>-->
+                <!--</button>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+                <!--<p>Please choose different times. &hellip;</p>-->
+            <!--</div>-->
+            <!--<div class="modal-footer">-->
+                <!--<button type="button" class="btn btn-light" (click)="c('Close click')">Close</button>-->
+            <!--</div>-->
+        <!--</ng-template>-->
 
 
 
@@ -33,21 +33,21 @@
              <strong> {{error}} </strong>
          </div>
          <br>
-         <div class="col-lg-7">
-            <dl class="item-property">
-                <dt style="font-weight: 500;">
+         <div class="col-lg-7" style="display: inline-flex;">
+            <dl class="item-property" style="padding-left: 25px;">
+                <dt style="font-weight: 500; ">
                     <span>Building</span>
                 </dt>
                 <dd><div class="bg"><span>{{ room_info.buildingName }}</span></div></dd>
             </dl>
-            <dl class="item-property">
+            <dl class="item-property" style=" padding-left: 25px;">
                 <dt style="font-weight: 500;">
                     <span>Conference Room</span>
                 </dt>
                 <dd><div class="bg"><span>{{ room_info.roomName }}</span></div></dd>
             </dl>
-            <dl class="param param-feature">
-                <dt style="font-weight: 500;">Equipments Provided</dt>
+            <dl class="param param-feature" style="padding-left: 25px;">
+                <dt style="font-weight: 500; ">Equipments Provided</dt>
                 <dd>
                     <div class="bg">
                         <div class="chiller_cb" *ngFor="let equip of room_info.equipments">
@@ -152,7 +152,8 @@
                                     </div>
                                     <div class="form-button">
                                         <label for="submit_form_1">&nbsp;</label>
-                                        <button [disabled]="!reservationDetailForm.valid" style="border-radius: 5px;" type="submit" class="btn btn-primary btn-sm" name="submit_form_1" id="submit_form_1" (click)="saveReservationDetails()">Continue</button>
+                                        <button [disabled]="!reservationDetailForm.valid" style="border-radius: 5px;" type="submit" class="btn btn-primary btn-sm" name="submit_form_1" id="submit_form_1"
+                                                (click)="saveReservationDetails()">Continue</button>
                                     </div>
                                 </form>
                             </div>
@@ -166,15 +167,10 @@
                                             <input type="date" class="with-status-border form-control" maxlength="80" name="startDate" id="startDate" formControlName="startDate">
                                         </div>
                                         <br>
-                                        <label style="padding-left: 15px;" for="timeAvailable" class="control-label">Available Hours</label>
+                                        <label style="padding-left: 15px;"  class="control-label">Available Hours</label>
                                         <div class="timeAvailablityTable">
                                             <table cellspacing="1" cellpadding="0">
                                                 <tbody>
-                                                    <!--<tr>-->
-                                                        <!--<th>-->
-                                                            <!--<h3>Available Hours</h3>-->
-                                                        <!--</th>-->
-                                                    <!--</tr>-->
                                                     <tr>
                                                         <td valign="top">
                                                             <table>
@@ -185,7 +181,7 @@
                                                                     </tr>
                                                                     <tr *ngFor="let time of [9,10,11,12,13,14,15,16,17]">
                                                                         <td style="height: 20px;">
-                                                                            <div class="timeRows" style=" text-align: center">{{ time }}</div>
+                                                                            <div class="timeRows" style=" text-align: right">{{ time }}</div>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -205,12 +201,12 @@
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
-                                                                        <tr *ngFor="let x of [1,2,3,4,5,6,7,8, 9]" style="border-spacing: 1px; border-collapse: separate">
+                                                                        <tr *ngFor="let row of [1,2,3,4,5,6,7,8,9]" style="border-spacing: 1px; border-collapse: separate">
                                                                             <td>
-                                                                                <div class="rmAvailable" style="width: 60px; float: left;"></div>
-                                                                                <div class="rmAvailable" style="width: 60px; float: left;"></div>
-                                                                                <div class="rmAvailable" style="width: 60px; float: left;"></div>
-                                                                                <div class="rmAvailable" style="width: 60px; float: left;"></div>
+                                                                                <div class="rmAvailable" ></div>
+                                                                                <div class="rmAvailable" [ngStyle]="isRoomAvailable(row*2)"></div>
+                                                                                <div class="rmAvailable" [ngStyle]="isRoomAvailable(row*3)"></div>
+                                                                                <div class="rmAvailable" [ngStyle]="isRoomAvailable(row*4)"></div>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -224,7 +220,7 @@
                                         <br>
                                         <div class="row" style="padding-left: 15px">
                                             <div class="form-group planyo-form-item-group col-md-4" id="row_startTime" >
-                                                <label for="startTime" class="control-label">Start Time<em>*</em></label>
+                                                <label class="control-label">Start Time<em>*</em></label>
                                                 <select name="startTime" id="startTime1" formControlName="startTimeHr">
                                                     <option value="9">9</option>
                                                     <option value="10">10</option>
@@ -267,7 +263,8 @@
                                     <br>
                                     <div class="form-button">
                                         <label for="submit_form_1">&nbsp;</label>
-                                        <button [disabled]="!reservationTimeForm.valid" style="border-radius: 5px;" type="submit" class="btn btn-primary btn-sm" name="submit_form_!" id="submit_form_!"(click)="saveReservationTime()">Make Reservation</button>
+                                        <button [disabled]="!reservationTimeForm.valid" style="border-radius: 5px;" type="submit" class="btn btn-primary btn-sm" name="submit_form_!" id="submit_form_!"
+                                                (click)="saveReservationTime()">Make Reservation</button>
                                     </div>
                                 </form>
                             </div>

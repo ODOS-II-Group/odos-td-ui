@@ -43,8 +43,6 @@ export class ReservationComponent implements OnInit {
     isReservationDetailForm: boolean = true;
     isReservationTimeForm: boolean = false;
     isReservationCompleteForm: boolean = false;
-    conferenceRoomId: number;
-    roomScheduleStartTime: string;
 
     reservation_info = {
         'requestorId': '',
@@ -56,7 +54,8 @@ export class ReservationComponent implements OnInit {
         'conferenceRoomId': '' ,
         'firstName': '',
         'lastName': '',
-        'conferenceDescription': ''
+        'conferenceDescription': '',
+        'numberOfPeople':''
     };
 
 	room_info = {
@@ -75,7 +74,7 @@ export class ReservationComponent implements OnInit {
         private reservationService: ReservationService,
         private modalService: NgbModal
     ) { }
-    numberOfpeopleSelect =[5,10,15,20,25,30,35,40,45,50];
+    numberOfpeopleSelect =['select',5,10,15,20,25,30,35,40,45,50];
 
     ngOnInit() {
 
@@ -108,6 +107,7 @@ export class ReservationComponent implements OnInit {
     }
     isRoomAvailable(){
         console.log("date event ++ ", this.startDate);
+        console.log("Number of people ", this.reservationTimeForm.controls.numberOfPeople.value);
           let requestBody={
             "conferenceRoomId": this.reservation_info.conferenceRoomId,
             "roomScheduleStartTime": this.reservationTimeForm.controls.startDate.value + " " + this.reservationTimeForm.controls.startTimeHr.value + ":" + this.reservationTimeForm.controls.startTimeMin.value
@@ -162,6 +162,8 @@ export class ReservationComponent implements OnInit {
       const endHour = parseInt(this.reservationTimeForm.get('endTimeHr').value);
       const endMinute = parseInt(this.reservationTimeForm.get('endTimeMin').value);
       const numberOfPeople = parseInt(this.reservationTimeForm.get('numberOfPeople').value);
+
+      console.log("Number of people selected ", numberOfPeople);
 
       const diff = (endHour - startHour) * 60 + (endMinute - startMinute);
 
